@@ -896,9 +896,22 @@
     max-width: 48px;
   }
 
+  .scm-inventory-table th:nth-child(1),
+  .scm-inventory-table td:nth-child(1),
   .scm-inventory-table th:nth-child(3),
-  .scm-inventory-table td:nth-child(3) {
+  .scm-inventory-table td:nth-child(3),
+  .scm-inventory-table th:nth-child(5),
+  .scm-inventory-table td:nth-child(5) {
     display: none;
+  }
+
+     .scm-inventory-sku {
+    white-space: nowrap;
+  }
+
+  .scm-inventory-table td,
+  .scm-inventory-table th {
+    padding: 10px 10px;
   }
 
   .scm-approval-actions {
