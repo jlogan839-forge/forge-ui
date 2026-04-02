@@ -26,15 +26,15 @@ Small businesses and independent developers deserve the same quality UI as Fortu
 ## Quick start
 
 ### Via npm
-\`\`\`bash
+```bash
 npm install @jlogan839-forge/forge-ui
-\`\`\`
+```
 
 ### Via CDN / direct download
-\`\`\`html
+```html
 <link rel="stylesheet" href="forge-ui-kit.css">
 <script src="forge-ui-kit.js"></script>
-\`\`\`
+```
 
 [Download the latest release →](https://github.com/jlogan839-forge/forge-ui/releases)
 
@@ -290,17 +290,17 @@ Want to build a module? [Open a discussion →](https://github.com/jlogan839-for
 Purchase orders, supplier cards, shipment tracking, inventory tables,
 and approval flows. Free, MIT licensed, works with any backend.
 
-\`\`\`html
+```html
 <link rel="stylesheet" href="forge-ui-kit.css">
 <link rel="stylesheet" href="ui-scm.css">
 <script src="forge-ui-kit.js"></script>
 <script src="ui-scm.js"></script>
-\`\`\`
+```
 
 Or via npm:
-\`\`\`bash
+```bash
 npm install @jlogan839-forge/forge-ui
-\`\`\`
+```
 ---
 
 ## Contributing
