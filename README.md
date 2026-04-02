@@ -270,7 +270,7 @@ Forge is built in layers. The Core Kit is the foundation — domain modules buil
 | Module | Status | Covers |
 |---|---|---|
 | Core UI Kit | ✅ Available | Buttons, inputs, cards, modals, badges, alerts |
-| SCM | 🔜 Coming soon | Purchase orders, supplier cards, shipment tracking |
+| SCM | ✅ Available | Purchase orders, supplier cards, shipment tracking |
 | Finance | 🔜 Coming soon | Invoices, approval workflows, budget dashboards |
 | CRM | 🔜 Coming soon | Contact cards, pipeline boards, activity timelines |
 | HR | 📋 Planned | Employee profiles, org charts, leave requests |
@@ -279,6 +279,20 @@ Forge is built in layers. The Core Kit is the foundation — domain modules buil
 
 Want to build a module? [Open a discussion →](https://github.com/jlogan839-forge/forge-ui/discussions)
 
+---
+## SCM Module — available now
+
+[Live demo →](https://jlogan839-forge.github.io/forge-ui/ui-scm-demo.html)
+
+Purchase orders, supplier cards, shipment tracking, inventory tables,
+and approval flows. Free, MIT licensed, works with any backend.
+
+\`\`\`html
+<link rel="stylesheet" href="forge-ui-kit.css">
+<link rel="stylesheet" href="ui-scm.css">
+<script src="forge-ui-kit.js"></script>
+<script src="ui-scm.js"></script>
+\`\`\`
 ---
 
 ## Contributing
