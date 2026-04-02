@@ -1,0 +1,1257 @@
+/* Forge UI — MIT License — https://github.com/jlogan839-forge/forge-ui */
+
+/**
+ * Forge UI Kit - Core Stylesheet
+ * Version: 1.2.0
+ *
+ * Layers:
+ *   1. Forge brand tokens  - color palette, typography, radii
+ *   2. Semantic aliases    - maps brand tokens to component roles
+ *   3. Base reset
+ *   4. Components          - button, input, select, textarea, toggle,
+ *                            checkbox/radio, badge, alert, card, modal
+ *   5. Site components     - nav, hero, features, stats, codeblock, footer
+ *   6. Surface utilities   - forge-surface-dark/light/accent (contrast-safe)
+ *   7. Spacing & layout utilities
+ *   8. Reduced motion
+ *
+ * Usage:
+ *   <link rel="stylesheet" href="forge-ui-kit.css">
+ *   <script src="forge-ui-kit.js"></script>
+ *
+ * No build step. No framework. Works with any backend.
+ */
+
+/* --------------------------------------------------------------------
+   1. FORGE BRAND TOKENS
+   -------------------------------------------------------------------- */
+:root {
+
+  /* --- Neutral scale (iron to off-white) --- */
+  --forge-black:     #1a1917;
+  --forge-charcoal:  #2c2a27;
+  --forge-iron:      #4a4844;
+  --forge-ash:       #787470;
+  --forge-stone:     #b8b5b0;
+  --forge-chalk:     #e2dfd9;
+  --forge-offwhite:  #f5f3ee;
+  --forge-white:     #ffffff;
+
+  /* --- Accent scale (forge red / ember) --- */
+  --forge-deep:      #7a1e05;
+  --forge-red:       #c8410a;
+  --forge-ember:     #e0612a;
+  --forge-glow:      #f08050;
+  --forge-blush:     #fad4c0;
+  --forge-tint:      #fef0e8;
+
+  /* --- Typography --- */
+  --forge-font-display: "Fraunces", "DM Serif Display", Georgia, serif;
+  --forge-font-body:    "DM Sans", "Geist", system-ui, -apple-system, sans-serif;
+  --forge-font-mono:    "Geist Mono", "SFMono-Regular", Consolas, monospace;
+
+  /* --- Radii --- */
+  --forge-radius-sm:  4px;
+  --forge-radius-md:  8px;
+  --forge-radius-lg:  12px;
+  --forge-radius-xl:  16px;
+  --forge-radius-pill: 100px;
+
+  /* --- Spacing scale --- */
+  --forge-space-1:  4px;
+  --forge-space-2:  8px;
+  --forge-space-3:  12px;
+  --forge-space-4:  16px;
+  --forge-space-5:  20px;
+  --forge-space-6:  24px;
+  --forge-space-8:  32px;
+  --forge-space-10: 40px;
+  --forge-space-12: 48px;
+
+  /* --- Transitions --- */
+  --forge-transition: 140ms ease;
+}
+
+
+/* -----------------------------------
+   2. SEMANTIC ALIASES â€” Light mode
+   Maps brand tokens â†’ component roles.
+   Override these to re-theme without touching components.
+   ----------------------------------- */
+:root {
+  /* Backgrounds */
+  --color-background-primary:   var(--forge-white);
+  --color-background-secondary: var(--forge-offwhite);
+  --color-background-tertiary:  var(--forge-chalk);
+  --color-background-info:      #e6f1fb;
+  --color-background-success:   #eaf3de;
+  --color-background-warning:   var(--forge-tint);
+  --color-background-danger:    #fcebeb;
+  --color-background-accent:    var(--forge-tint);
+
+  /* Text */
+  --color-text-primary:   var(--forge-black);
+  --color-text-secondary: var(--forge-iron);
+  --color-text-tertiary:  var(--forge-ash);
+  --color-text-info:      #185fa5;
+  --color-text-success:   #3b6d11;
+  --color-text-warning:   var(--forge-deep);
+  --color-text-danger:    #a32d2d;
+  --color-text-accent:    var(--forge-red);
+
+  /* Borders */
+  --color-border-tertiary:  rgba(26, 25, 23, 0.10);
+  --color-border-secondary: rgba(26, 25, 23, 0.18);
+  --color-border-primary:   rgba(26, 25, 23, 0.28);
+  --color-border-accent:    var(--forge-ember);
+  --color-border-info:      #85b7eb;
+  --color-border-success:   #97c459;
+  --color-border-warning:   var(--forge-glow);
+  --color-border-danger:    #f09595;
+
+  /* Typography aliases */
+  --ui-font:    var(--forge-font-body);
+  --ui-mono:    var(--forge-font-mono);
+  --font-sans:  var(--forge-font-body);
+  --font-serif: var(--forge-font-display);
+  --font-mono:  var(--forge-font-mono);
+
+  /* Radius aliases */
+  --ui-radius-sm: var(--forge-radius-sm);
+  --ui-radius-md: var(--forge-radius-md);
+  --ui-radius-lg: var(--forge-radius-lg);
+  --ui-radius-xl: var(--forge-radius-xl);
+  --border-radius-md: var(--forge-radius-md);
+  --border-radius-lg: var(--forge-radius-lg);
+  --border-radius-xl: var(--forge-radius-xl);
+
+  /* Internal shorthand */
+  --ui-transition: var(--forge-transition);
+  --c-bg:      var(--color-background-primary);
+  --c-bg2:     var(--color-background-secondary);
+  --c-bg3:     var(--color-background-tertiary);
+  --c-text:    var(--color-text-primary);
+  --c-text2:   var(--color-text-secondary);
+  --c-text3:   var(--color-text-tertiary);
+  --c-border:  var(--color-border-tertiary);
+  --c-border2: var(--color-border-secondary);
+  --c-border3: var(--color-border-primary);
+  --c-accent:  var(--forge-red);
+  --c-info:    var(--color-text-info);
+  --c-success: var(--color-text-success);
+  --c-warn:    var(--color-text-warning);
+  --c-danger:  var(--color-text-danger);
+  --c-bg-info:    var(--color-background-info);
+  --c-bg-success: var(--color-background-success);
+  --c-bg-warn:    var(--color-background-warning);
+  --c-bg-danger:  var(--color-background-danger);
+  --c-bg-accent:  var(--color-background-accent);
+}
+
+/* Dark mode overrides */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-background-primary:   var(--forge-charcoal);
+    --color-background-secondary: var(--forge-iron);
+    --color-background-tertiary:  var(--forge-black);
+    --color-background-info:      #042c53;
+    --color-background-success:   #173404;
+    --color-background-warning:   var(--forge-deep);
+    --color-background-danger:    #501313;
+    --color-background-accent:    var(--forge-deep);
+
+    --color-text-primary:   var(--forge-offwhite);
+    --color-text-secondary: var(--forge-chalk);
+    --color-text-tertiary:  var(--forge-stone);
+    --color-text-info:      #85b7eb;
+    --color-text-success:   #97c459;
+    --color-text-warning:   var(--forge-glow);
+    --color-text-danger:    #f09595;
+    --color-text-accent:    var(--forge-ember);
+
+    --color-border-tertiary:  rgba(245, 243, 238, 0.10);
+    --color-border-secondary: rgba(245, 243, 238, 0.18);
+    --color-border-primary:   rgba(245, 243, 238, 0.28);
+    --color-border-accent:    var(--forge-red);
+  }
+}
+
+
+/* --------------------------------------------------------------------
+   3. BASE RESET
+   -------------------------------------------------------------------- */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-family: var(--ui-font);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--c-text);
+  background-color: var(--c-bg3);
+  margin: 0;
+}
+
+
+/* --------------------------------------------------------------------
+   4. TYPOGRAPHY HELPERS
+   -------------------------------------------------------------------- */
+
+.forge-display {
+  font-family: var(--forge-font-display);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  color: var(--c-text);
+}
+
+.forge-display-lg { font-size: clamp(36px, 6vw, 64px); }
+.forge-display-md { font-size: clamp(28px, 4vw, 44px); }
+.forge-display-sm { font-size: clamp(22px, 3vw, 32px); }
+
+.forge-heading {
+  font-family: var(--forge-font-body);
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--c-text);
+}
+
+.forge-body {
+  font-family: var(--forge-font-body);
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--c-text2);
+}
+
+.forge-caption {
+  font-family: var(--forge-font-body);
+  font-size: 13px;
+  color: var(--c-text3);
+}
+
+.forge-code {
+  font-family: var(--forge-font-mono);
+  font-size: 13px;
+  background: var(--c-bg2);
+  border: 0.5px solid var(--c-border);
+  padding: 2px 6px;
+  border-radius: var(--ui-radius-sm);
+  color: var(--c-text);
+}
+
+.forge-label {
+  font-family: var(--forge-font-body);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--c-text3);
+}
+
+/* Accent color helpers */
+.forge-accent         { color: var(--forge-red); }
+.forge-accent-bg      { background: var(--forge-red); color: var(--forge-offwhite); }
+.forge-accent-subtle  { background: var(--forge-tint); color: var(--forge-deep); }
+
+
+/* --------------------------------------------------------------------
+   5. LAYOUT HELPERS
+   -------------------------------------------------------------------- */
+
+.forge-container {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 var(--forge-space-6);
+}
+
+.forge-container-sm {
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 var(--forge-space-6);
+}
+
+.forge-section {
+  padding: var(--forge-space-12) 0;
+}
+
+.forge-divider {
+  border: none;
+  border-top: 0.5px solid var(--c-border);
+  margin: var(--forge-space-6) 0;
+}
+
+
+/* --------------------------------------------------------------------
+   6. BUTTON  - .ui-btn
+   -------------------------------------------------------------------- */
+.ui-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 0 18px;
+  height: 38px;
+  border-radius: var(--ui-radius-md);
+  font-family: var(--ui-font);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  border: 0.5px solid var(--c-border2);
+  background: transparent;
+  color: var(--c-text);
+  transition:
+    background var(--ui-transition),
+    border-color var(--ui-transition),
+    opacity var(--ui-transition),
+    transform var(--ui-transition);
+  text-decoration: none;
+  position: relative;
+  white-space: nowrap;
+  user-select: none;
+  letter-spacing: 0.01em;
+}
+.ui-btn:hover:not(:disabled) {
+  background: var(--c-bg2);
+  border-color: var(--c-border3);
+}
+.ui-btn:active:not(:disabled) { transform: scale(0.98); }
+.ui-btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--forge-blush);
+}
+.ui-btn:disabled,
+.ui-btn[aria-disabled="true"] {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Variants */
+.ui-btn-primary {
+  background: var(--forge-black);
+  color: var(--forge-offwhite);
+  border-color: transparent;
+}
+.ui-btn-primary:hover:not(:disabled) {
+  background: var(--forge-charcoal);
+  opacity: 1;
+}
+
+.ui-btn-accent {
+  background: var(--forge-red);
+  color: var(--forge-offwhite);
+  border-color: transparent;
+}
+.ui-btn-accent:hover:not(:disabled) {
+  background: var(--forge-ember);
+  opacity: 1;
+}
+
+.ui-btn-danger {
+  color: var(--c-danger);
+  border-color: var(--c-bg-danger);
+}
+.ui-btn-danger:hover:not(:disabled) {
+  background: var(--c-bg-danger);
+}
+
+.ui-btn-ghost {
+  border-color: transparent;
+}
+.ui-btn-ghost:hover:not(:disabled) {
+  background: var(--c-bg2);
+  border-color: transparent;
+}
+
+/* Sizes */
+.ui-btn-sm  { height: 30px; padding: 0 12px; font-size: 13px; border-radius: var(--ui-radius-sm); }
+.ui-btn-lg  { height: 46px; padding: 0 24px; font-size: 15px; }
+
+/* Square icon button */
+.ui-btn-icon         { width: 38px; padding: 0; }
+.ui-btn-icon.ui-btn-sm { width: 30px; }
+.ui-btn-icon.ui-btn-lg { width: 46px; }
+
+/* Loading state */
+.ui-btn-loading { pointer-events: none; }
+.ui-btn-loading .btn-label { opacity: 0; }
+.ui-btn-loading::after {
+  content: '';
+  position: absolute;
+  width: 14px; height: 14px;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: ui-spin 0.6s linear infinite;
+}
+@keyframes ui-spin { to { transform: rotate(360deg); } }
+
+
+/* --------------------------------------------------------------------
+   7. FORM FIELD  â€” .ui-field, .ui-label
+   -------------------------------------------------------------------- */
+.ui-field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.ui-label {
+  font-family: var(--ui-font);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--c-text2);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.ui-label .required {
+  color: var(--c-danger);
+  font-size: 12px;
+}
+
+.ui-helper {
+  font-family: var(--ui-font);
+  font-size: 12px;
+  color: var(--c-text3);
+}
+.ui-error-msg {
+  font-family: var(--ui-font);
+  font-size: 12px;
+  color: var(--c-danger);
+  display: none;
+}
+.ui-error-msg.visible { display: block; }
+
+
+/* --------------------------------------------------------------------
+   8. INPUT  - .ui-input
+   -------------------------------------------------------------------- */
+.ui-input {
+  width: 100%;
+  height: 38px;
+  padding: 0 12px;
+  border-radius: var(--ui-radius-md);
+  border: 0.5px solid var(--c-border2);
+  background: var(--c-bg);
+  color: var(--c-text);
+  font-family: var(--ui-font);
+  font-size: 14px;
+  transition: border-color var(--ui-transition), box-shadow var(--ui-transition);
+  outline: none;
+  appearance: none;
+}
+.ui-input::placeholder { color: var(--c-text3); }
+.ui-input:hover        { border-color: var(--c-border3); }
+.ui-input:focus {
+  border-color: var(--forge-red);
+  box-shadow: 0 0 0 3px var(--forge-blush);
+}
+.ui-input[aria-invalid="true"],
+.ui-input.ui-input-error {
+  border-color: var(--c-danger);
+}
+.ui-input[aria-invalid="true"]:focus,
+.ui-input.ui-input-error:focus {
+  box-shadow: 0 0 0 3px var(--c-bg-danger);
+}
+.ui-input:disabled { opacity: 0.5; cursor: not-allowed; }
+
+
+/* --------------------------------------------------------------------
+   9. TEXTAREA  - .ui-textarea
+   -------------------------------------------------------------------- */
+.ui-textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: var(--ui-radius-md);
+  border: 0.5px solid var(--c-border2);
+  background: var(--c-bg);
+  color: var(--c-text);
+  font-family: var(--ui-font);
+  font-size: 14px;
+  resize: vertical;
+  min-height: 88px;
+  outline: none;
+  transition: border-color var(--ui-transition), box-shadow var(--ui-transition);
+}
+.ui-textarea::placeholder { color: var(--c-text3); }
+.ui-textarea:hover { border-color: var(--c-border3); }
+.ui-textarea:focus {
+  border-color: var(--forge-red);
+  box-shadow: 0 0 0 3px var(--forge-blush);
+}
+
+
+/* --------------------------------------------------------------------
+   10. SELECT  -- .ui-select + .ui-select-wrap
+   -------------------------------------------------------------------- */
+.ui-select-wrap {
+  position: relative;
+  width: 100%;
+}
+.ui-select {
+  width: 100%;
+  height: 38px;
+  padding: 0 32px 0 12px;
+  border-radius: var(--ui-radius-md);
+  border: 0.5px solid var(--c-border2);
+  background: var(--c-bg);
+  color: var(--c-text);
+  font-family: var(--ui-font);
+  font-size: 14px;
+  appearance: none;
+  outline: none;
+  cursor: pointer;
+  transition: border-color var(--ui-transition), box-shadow var(--ui-transition);
+}
+.ui-select:hover { border-color: var(--c-border3); }
+.ui-select:focus {
+  border-color: var(--forge-red);
+  box-shadow: 0 0 0 3px var(--forge-blush);
+}
+.ui-select-arrow {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: var(--c-text3);
+}
+
+
+/* --------------------------------------------------------------------
+   11. CHECKBOX & RADIO  -- .ui-check-label
+   -------------------------------------------------------------------- */
+.ui-check-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.ui-check-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--ui-font);
+  font-size: 14px;
+  cursor: pointer;
+  user-select: none;
+}
+.ui-check-label input[type="checkbox"],
+.ui-check-label input[type="radio"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--forge-red);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.ui-check-label input:focus-visible {
+  outline: 2px solid var(--forge-red);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+
+/* --------------------------------------------------------------------
+   12. TOGGLE  -- .ui-toggle-wrap
+   -------------------------------------------------------------------- */
+.ui-toggle-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  user-select: none;
+  font-family: var(--ui-font);
+  font-size: 14px;
+}
+.ui-toggle-track {
+  position: relative;
+  width: 36px; height: 20px;
+  border-radius: 10px;
+  background: var(--c-border2);
+  transition: background 200ms;
+  flex-shrink: 0;
+}
+.ui-toggle-track.on { background: var(--forge-red); }
+.ui-toggle-knob {
+  position: absolute;
+  top: 3px; left: 3px;
+  width: 14px; height: 14px;
+  background: white;
+  border-radius: 50%;
+  transition: transform 200ms;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+.ui-toggle-track.on .ui-toggle-knob { transform: translateX(16px); }
+.ui-toggle-wrap:focus-visible .ui-toggle-track {
+  box-shadow: 0 0 0 3px var(--forge-blush);
+}
+
+
+/* --------------------------------------------------------------------
+   13. BADGE  -- .ui-badge
+   -------------------------------------------------------------------- */
+.ui-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: var(--forge-radius-pill);
+  font-family: var(--ui-font);
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.5;
+  white-space: nowrap;
+}
+.ui-badge-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.ui-badge-default { background: var(--c-bg2); color: var(--c-text2); border: 0.5px solid var(--c-border); }
+.ui-badge-accent  { background: var(--forge-tint); color: var(--forge-deep); }
+.ui-badge-info    { background: var(--c-bg-info);    color: var(--c-info); }
+.ui-badge-success { background: var(--c-bg-success); color: var(--c-success); }
+.ui-badge-warn    { background: var(--c-bg-warn);    color: var(--c-warn); }
+.ui-badge-danger  { background: var(--c-bg-danger);  color: var(--c-danger); }
+
+
+/* --------------------------------------------------------------------
+   14. ALERT  -- .ui-alert
+   -------------------------------------------------------------------- */
+.ui-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: var(--ui-radius-md);
+  border-left: 3px solid;
+  font-family: var(--ui-font);
+  font-size: 14px;
+}
+.ui-alert-icon  { font-size: 16px; line-height: 1.4; flex-shrink: 0; }
+.ui-alert-body  { flex: 1; min-width: 0; }
+.ui-alert-title { font-weight: 500; margin-bottom: 2px; }
+.ui-alert-desc  { font-size: 13px; opacity: 0.85; margin: 0; }
+.ui-alert-close {
+  background: none; border: none; cursor: pointer;
+  color: inherit; opacity: 0.6; padding: 0;
+  font-size: 14px; line-height: 1;
+  align-self: flex-start; margin-left: 4px;
+  border-radius: 3px;
+}
+.ui-alert-close:hover { opacity: 1; }
+.ui-alert-close:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+
+.ui-alert-accent  { background: var(--forge-tint);  color: var(--forge-deep);  border-color: var(--forge-red); }
+.ui-alert-info    { background: var(--c-bg-info);    color: var(--c-info);    border-color: var(--c-info); }
+.ui-alert-success { background: var(--c-bg-success); color: var(--c-success); border-color: var(--c-success); }
+.ui-alert-warn    { background: var(--c-bg-warn);    color: var(--c-warn);    border-color: var(--c-warn); }
+.ui-alert-danger  { background: var(--c-bg-danger);  color: var(--c-danger);  border-color: var(--c-danger); }
+
+
+/* --------------------------------------------------------------------
+   15. CARD  -- .ui-card
+   -------------------------------------------------------------------- */
+.ui-card {
+  background: var(--c-bg);
+  border: 0.5px solid var(--c-border);
+  border-radius: var(--ui-radius-lg);
+  overflow: hidden;
+  font-family: var(--ui-font);
+}
+.ui-card-header {
+  padding: 14px 16px 12px;
+  border-bottom: 0.5px solid var(--c-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.ui-card-title    { font-size: 14px; font-weight: 500; color: var(--c-text); }
+.ui-card-subtitle { font-size: 12px; color: var(--c-text2); margin-top: 2px; }
+.ui-card-body     { padding: 16px; }
+.ui-card-footer {
+  padding: 12px 16px;
+  border-top: 0.5px solid var(--c-border);
+  background: var(--c-bg2);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+/* Accent-topped card variant */
+.ui-card-accent { border-top: 2px solid var(--forge-red); }
+
+
+/* --------------------------------------------------------------------
+   16. MODAL  â€” .ui-modal-backdrop + .ui-modal
+   -------------------------------------------------------------------- */
+.ui-modal-backdrop {
+  position: fixed; inset: 0;
+  background: rgba(26, 25, 23, 0.55);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 16px;
+}
+.ui-modal-backdrop.open { display: flex; }
+.ui-modal {
+  background: var(--c-bg);
+  border-radius: var(--ui-radius-xl);
+  border: 0.5px solid var(--c-border);
+  width: 100%; max-width: 440px;
+  box-shadow: 0 8px 40px rgba(26, 25, 23, 0.18);
+  animation: ui-modal-in 160ms ease;
+  font-family: var(--ui-font);
+}
+@keyframes ui-modal-in {
+  from { opacity: 0; transform: scale(0.96) translateY(8px); }
+  to   { opacity: 1; transform: none; }
+}
+.ui-modal-header {
+  padding: 18px 20px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 0.5px solid var(--c-border);
+}
+.ui-modal-title { font-size: 15px; font-weight: 500; color: var(--c-text); }
+.ui-modal-close {
+  background: none; border: none; cursor: pointer;
+  color: var(--c-text2); padding: 4px; border-radius: 4px;
+  font-size: 16px; line-height: 1;
+  transition: color var(--ui-transition);
+}
+.ui-modal-close:hover { color: var(--c-text); }
+.ui-modal-close:focus-visible { outline: 2px solid var(--forge-red); outline-offset: 2px; }
+.ui-modal-body {
+  padding: 18px 20px;
+  font-size: 14px;
+  color: var(--c-text2);
+  line-height: 1.6;
+}
+.ui-modal-footer {
+  padding: 14px 20px;
+  border-top: 0.5px solid var(--c-border);
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+
+/* --------------------------------------------------------------------
+   17. FORGE SITE COMPONENTS
+   Higher-level patterns for building the
+   Forge website itself.
+   -------------------------------------------------------------------- */
+
+/* Nav */
+.forge-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--c-bg);
+  border-bottom: 0.5px solid var(--c-border);
+  padding: 0 var(--forge-space-6);
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--forge-space-4);
+}
+
+.forge-nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  font-family: var(--forge-font-display);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--c-text);
+  letter-spacing: -0.03em;
+}
+
+.forge-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.forge-nav-links a {
+  display: block;
+  padding: 6px 12px;
+  font-size: 14px;
+  color: var(--c-text2);
+  text-decoration: none;
+  border-radius: var(--ui-radius-sm);
+  transition: color var(--ui-transition), background var(--ui-transition);
+}
+.forge-nav-links a:hover { color: var(--c-text); background: var(--c-bg2); }
+.forge-nav-links a.active { color: var(--c-text); font-weight: 500; }
+
+/* Hero */
+.forge-hero {
+  padding: var(--forge-space-12) 0 var(--forge-space-10);
+  text-align: center;
+}
+
+.forge-hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--forge-red);
+  background: var(--forge-tint);
+  padding: 4px 12px;
+  border-radius: var(--forge-radius-pill);
+  margin-bottom: var(--forge-space-5);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.forge-hero-title {
+  font-family: var(--forge-font-display);
+  font-size: clamp(36px, 6vw, 68px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  color: var(--c-text);
+  margin-bottom: var(--forge-space-5);
+}
+
+.forge-hero-title em {
+  font-style: italic;
+  color: var(--forge-red);
+}
+
+.forge-hero-sub {
+  font-size: clamp(16px, 2vw, 20px);
+  color: var(--c-text2);
+  line-height: 1.6;
+  max-width: 560px;
+  margin: 0 auto var(--forge-space-8);
+}
+
+.forge-hero-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--forge-space-3);
+  flex-wrap: wrap;
+}
+
+/* Feature grid */
+.forge-feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+}
+
+.forge-feature {
+  background: var(--c-bg);
+  border: 0.5px solid var(--c-border);
+  border-radius: var(--ui-radius-lg);
+  padding: var(--forge-space-5) var(--forge-space-5) var(--forge-space-5);
+}
+
+.forge-feature-icon {
+  width: 36px; height: 36px;
+  background: var(--forge-tint);
+  border-radius: var(--ui-radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--forge-space-3);
+  color: var(--forge-red);
+}
+
+.forge-feature-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--c-text);
+  margin-bottom: 6px;
+}
+
+.forge-feature-desc {
+  font-size: 13px;
+  color: var(--c-text2);
+  line-height: 1.6;
+}
+
+/* Stat bar */
+.forge-stat-bar {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 0;
+  border: 0.5px solid var(--c-border);
+  border-radius: var(--ui-radius-lg);
+  overflow: hidden;
+  background: var(--c-bg);
+}
+
+.forge-stat {
+  padding: var(--forge-space-5) var(--forge-space-5);
+  border-right: 0.5px solid var(--c-border);
+  text-align: center;
+}
+.forge-stat:last-child { border-right: none; }
+
+.forge-stat-value {
+  font-family: var(--forge-font-display);
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--c-text);
+  letter-spacing: -0.03em;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.forge-stat-value em { color: var(--forge-red); font-style: normal; }
+
+.forge-stat-label {
+  font-size: 12px;
+  color: var(--c-text3);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 500;
+}
+
+/* Code block */
+.forge-codeblock {
+  background: var(--forge-black);
+  border-radius: var(--ui-radius-lg);
+  padding: var(--forge-space-5) var(--forge-space-6);
+  font-family: var(--forge-font-mono);
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--forge-chalk);
+  overflow-x: auto;
+  border: 0.5px solid rgba(245, 243, 238, 0.08);
+}
+.forge-codeblock .c-comment { color: var(--forge-ash); }
+.forge-codeblock .c-tag     { color: var(--forge-glow); }
+.forge-codeblock .c-attr    { color: var(--forge-blush); }
+.forge-codeblock .c-string  { color: #97c459; }
+.forge-codeblock .c-keyword { color: #85b7eb; }
+
+/* Footer */
+.forge-footer {
+  border-top: 0.5px solid var(--c-border);
+  padding: var(--forge-space-8) var(--forge-space-6);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--forge-space-4);
+  flex-wrap: wrap;
+  font-size: 13px;
+  color: var(--c-text3);
+}
+
+
+/* --------------------------------------------------------------------
+   18. SURFACE UTILITIES
+   Apply to any section or container to
+   guarantee accessible contrast for all
+   child text, borders, and components.
+   Never manually set text colors inside
+   a surface - let the tokens do it.
+   -------------------------------------------------------------------- */
+
+/**
+ * Dark surface - forge black background.
+ * Use for hero sections, feature grids,
+ * full-bleed dark bands.
+ *
+ * <section class="forge-surface-dark">
+ *   All text, borders, cards inside here
+ *   automatically use light-on-dark values.
+ * </section>
+ */
+.forge-surface-dark {
+  background: var(--forge-black);
+
+  --color-background-primary:   var(--forge-charcoal);
+  --color-background-secondary: var(--forge-iron);
+  --color-background-tertiary:  var(--forge-black);
+  --color-background-accent:    var(--forge-deep);
+  --color-background-info:      #042c53;
+  --color-background-success:   #173404;
+  --color-background-warning:   var(--forge-deep);
+  --color-background-danger:    #501313;
+
+  --color-text-primary:   var(--forge-offwhite);
+  --color-text-secondary: var(--forge-chalk);
+  --color-text-tertiary:  var(--forge-stone);
+  --color-text-accent:    var(--forge-ember);
+  --color-text-info:      #85b7eb;
+  --color-text-success:   #97c459;
+  --color-text-warning:   var(--forge-glow);
+  --color-text-danger:    #f09595;
+
+  --color-border-tertiary:  rgba(245, 243, 238, 0.08);
+  --color-border-secondary: rgba(245, 243, 238, 0.16);
+  --color-border-primary:   rgba(245, 243, 238, 0.28);
+  --color-border-accent:    var(--forge-red);
+
+  --c-bg:      var(--color-background-primary);
+  --c-bg2:     var(--color-background-secondary);
+  --c-bg3:     var(--color-background-tertiary);
+  --c-text:    var(--color-text-primary);
+  --c-text2:   var(--color-text-secondary);
+  --c-text3:   var(--color-text-tertiary);
+  --c-border:  var(--color-border-tertiary);
+  --c-border2: var(--color-border-secondary);
+  --c-border3: var(--color-border-primary);
+}
+
+/**
+ * Charcoal surface -- one step lighter than black.
+ * Use for alternating sections, sidebars,
+ * secondary panels on a dark-themed page.
+ *
+ * <section class="forge-surface-charcoal">
+ */
+.forge-surface-charcoal {
+  background: var(--forge-charcoal);
+
+  --color-background-primary:   var(--forge-iron);
+  --color-background-secondary: var(--forge-charcoal);
+  --color-background-tertiary:  var(--forge-black);
+
+  --color-text-primary:   var(--forge-offwhite);
+  --color-text-secondary: var(--forge-chalk);
+  --color-text-tertiary:  var(--forge-stone);
+  --color-text-accent:    var(--forge-ember);
+
+  --color-border-tertiary:  rgba(245, 243, 238, 0.08);
+  --color-border-secondary: rgba(245, 243, 238, 0.16);
+  --color-border-primary:   rgba(245, 243, 238, 0.28);
+
+  --c-bg:      var(--color-background-primary);
+  --c-bg2:     var(--color-background-secondary);
+  --c-bg3:     var(--color-background-tertiary);
+  --c-text:    var(--color-text-primary);
+  --c-text2:   var(--color-text-secondary);
+  --c-text3:   var(--color-text-tertiary);
+  --c-border:  var(--color-border-tertiary);
+  --c-border2: var(--color-border-secondary);
+  --c-border3: var(--color-border-primary);
+}
+
+/**
+ * Light surface â€” warm off-white background.
+ * Use for main page body, docs, content sections.
+ * This is the default for most pages.
+ *
+ * <section class="forge-surface-light">
+ */
+.forge-surface-light {
+  background: var(--forge-offwhite);
+
+  --color-background-primary:   var(--forge-white);
+  --color-background-secondary: var(--forge-offwhite);
+  --color-background-tertiary:  var(--forge-chalk);
+
+  --color-text-primary:   var(--forge-black);
+  --color-text-secondary: var(--forge-iron);
+  --color-text-tertiary:  var(--forge-ash);
+  --color-text-accent:    var(--forge-red);
+
+  --color-border-tertiary:  rgba(26, 25, 23, 0.10);
+  --color-border-secondary: rgba(26, 25, 23, 0.18);
+  --color-border-primary:   rgba(26, 25, 23, 0.28);
+
+  --c-bg:      var(--color-background-primary);
+  --c-bg2:     var(--color-background-secondary);
+  --c-bg3:     var(--color-background-tertiary);
+  --c-text:    var(--color-text-primary);
+  --c-text2:   var(--color-text-secondary);
+  --c-text3:   var(--color-text-tertiary);
+  --c-border:  var(--color-border-tertiary);
+  --c-border2: var(--color-border-secondary);
+  --c-border3: var(--color-border-primary);
+}
+
+/**
+ * White surface â€” pure white background.
+ * Use for cards, modals, docs content areas
+ * that need maximum contrast.
+ *
+ * <div class="forge-surface-white">
+ */
+.forge-surface-white {
+  background: var(--forge-white);
+
+  --color-background-primary:   var(--forge-white);
+  --color-background-secondary: var(--forge-offwhite);
+  --color-background-tertiary:  var(--forge-chalk);
+
+  --color-text-primary:   var(--forge-black);
+  --color-text-secondary: var(--forge-iron);
+  --color-text-tertiary:  var(--forge-ash);
+  --color-text-accent:    var(--forge-red);
+
+  --color-border-tertiary:  rgba(26, 25, 23, 0.10);
+  --color-border-secondary: rgba(26, 25, 23, 0.18);
+  --color-border-primary:   rgba(26, 25, 23, 0.28);
+
+  --c-bg:      var(--color-background-primary);
+  --c-bg2:     var(--color-background-secondary);
+  --c-bg3:     var(--color-background-tertiary);
+  --c-text:    var(--color-text-primary);
+  --c-text2:   var(--color-text-secondary);
+  --c-text3:   var(--color-text-tertiary);
+  --c-border:  var(--color-border-tertiary);
+  --c-border2: var(--color-border-secondary);
+  --c-border3: var(--color-border-primary);
+}
+
+/**
+ * Accent surface â€” forge red background.
+ * Use sparingly: CTAs, banners, highlight bars.
+ * All text flips to off-white automatically.
+ *
+ * <div class="forge-surface-accent">
+ */
+.forge-surface-accent {
+  background: var(--forge-red);
+
+  --color-background-primary:   var(--forge-ember);
+  --color-background-secondary: var(--forge-deep);
+
+  --color-text-primary:   var(--forge-offwhite);
+  --color-text-secondary: var(--forge-blush);
+  --color-text-tertiary:  rgba(245, 243, 238, 0.6);
+  --color-text-accent:    var(--forge-offwhite);
+
+  --color-border-tertiary:  rgba(245, 243, 238, 0.2);
+  --color-border-secondary: rgba(245, 243, 238, 0.35);
+  --color-border-primary:   rgba(245, 243, 238, 0.6);
+
+  --c-bg:      var(--color-background-primary);
+  --c-bg2:     var(--color-background-secondary);
+  --c-text:    var(--color-text-primary);
+  --c-text2:   var(--color-text-secondary);
+  --c-text3:   var(--color-text-tertiary);
+  --c-border:  var(--color-border-tertiary);
+  --c-border2: var(--color-border-secondary);
+  --c-border3: var(--color-border-primary);
+}
+
+/* Ghost button on dark surfaces â€” auto-adapts border to be visible */
+.forge-surface-dark .ui-btn-ghost,
+.forge-surface-charcoal .ui-btn-ghost,
+.forge-surface-accent .ui-btn-ghost {
+  border-color: var(--c-border2);
+  color: var(--c-text);
+}
+.forge-surface-dark .ui-btn-ghost:hover,
+.forge-surface-charcoal .ui-btn-ghost:hover,
+.forge-surface-accent .ui-btn-ghost:hover {
+  background: rgba(245, 243, 238, 0.08);
+}
+
+/* Default button on dark surfaces */
+.forge-surface-dark .ui-btn,
+.forge-surface-charcoal .ui-btn {
+  color: var(--forge-offwhite);
+  border-color: var(--c-border2);
+}
+.forge-surface-dark .ui-btn:hover,
+.forge-surface-charcoal .ui-btn:hover {
+  background: rgba(245, 243, 238, 0.08);
+}
+
+/* Feature cards inherit surface correctly */
+.forge-surface-dark .forge-feature,
+.forge-surface-charcoal .forge-feature {
+  background: var(--c-bg);
+  border-color: var(--c-border);
+}
+.forge-surface-dark .forge-feature-icon,
+.forge-surface-charcoal .forge-feature-icon {
+  background: rgba(200, 65, 10, 0.2);
+  color: var(--forge-glow);
+}
+
+/* Stat bar on dark surfaces */
+.forge-surface-dark .forge-stat-bar,
+.forge-surface-charcoal .forge-stat-bar {
+  background: var(--c-bg);
+  border-color: var(--c-border);
+}
+.forge-surface-dark .forge-stat,
+.forge-surface-charcoal .forge-stat {
+  border-color: var(--c-border);
+}
+
+
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   19. SPACING & LAYOUT UTILITIES
+   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+.forge-sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.forge-text-center { text-align: center; }
+.forge-text-left   { text-align: left; }
+
+.forge-mt-1 { margin-top: var(--forge-space-1); }
+.forge-mt-2 { margin-top: var(--forge-space-2); }
+.forge-mt-3 { margin-top: var(--forge-space-3); }
+.forge-mt-4 { margin-top: var(--forge-space-4); }
+.forge-mt-6 { margin-top: var(--forge-space-6); }
+.forge-mt-8 { margin-top: var(--forge-space-8); }
+
+.forge-mb-1 { margin-bottom: var(--forge-space-1); }
+.forge-mb-2 { margin-bottom: var(--forge-space-2); }
+.forge-mb-3 { margin-bottom: var(--forge-space-3); }
+.forge-mb-4 { margin-bottom: var(--forge-space-4); }
+.forge-mb-6 { margin-bottom: var(--forge-space-6); }
+.forge-mb-8 { margin-bottom: var(--forge-space-8); }
+
+
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   20. REDUCED MOTION
+   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+@media (prefers-reduced-motion: reduce) {
+  .ui-btn,
+  .ui-input,
+  .ui-select,
+  .ui-textarea,
+  .ui-toggle-knob,
+  .ui-toggle-track,
+  .ui-modal,
+  .ui-alert,
+  .ui-modal-close,
+  .forge-nav-links a,
+  .forge-feature {
+    transition: none;
+    animation: none;
+  }
+  .ui-btn-loading::after { animation: none; }
+}

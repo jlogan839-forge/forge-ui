@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manifesto — Forge UI Kit</title>
+  <meta name="description" content="Great software shouldn't cost a fortune. We're building the tools that give small businesses the same power as the giants, free, forever.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,700;1,400;1,700&family=DM+Sans:wght@400;500&family=DM+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="forge-ui-kit.css">
+  <style>
+    body { background: var(--forge-offwhite); }
+
+    .manifesto-hero {
+      padding: var(--forge-space-12) 0 var(--forge-space-10);
+    }
+
+    .manifesto-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--forge-font-body);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--forge-glow);
+      margin-bottom: var(--forge-space-6);
+    }
+
+    .manifesto-eyebrow::before {
+      content: '';
+      display: inline-block;
+      width: 24px;
+      height: 1.5px;
+      background: var(--forge-red);
+    }
+
+    .manifesto-headline {
+      font-family: var(--forge-font-display);
+      font-size: clamp(40px, 7vw, 80px);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      color: var(--forge-offwhite);
+      margin-bottom: var(--forge-space-6);
+    }
+
+    .manifesto-headline em {
+      font-style: italic;
+      color: var(--forge-ember);
+    }
+
+    .manifesto-intro {
+      font-family: var(--forge-font-body);
+      font-size: clamp(17px, 2.2vw, 21px);
+      line-height: 1.7;
+      color: var(--forge-chalk);
+      max-width: 620px;
+    }
+
+    .manifesto-body {
+      padding: var(--forge-space-12) 0;
+    }
+
+    .manifesto-section {
+      max-width: 680px;
+      margin: 0 auto var(--forge-space-12);
+    }
+
+    .manifesto-section:last-child { margin-bottom: 0; }
+
+    .manifesto-section-num {
+      font-family: var(--forge-font-mono);
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--forge-red);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: var(--forge-space-3);
+    }
+
+    .manifesto-section-title {
+      font-family: var(--forge-font-display);
+      font-size: clamp(24px, 3.5vw, 36px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      color: var(--forge-black);
+      margin-bottom: var(--forge-space-5);
+    }
+
+    .manifesto-section-title em {
+      font-style: italic;
+      color: var(--forge-red);
+    }
+
+    .manifesto-p {
+      font-family: var(--forge-font-body);
+      font-size: 17px;
+      line-height: 1.8;
+      color: var(--forge-iron);
+      margin-bottom: var(--forge-space-4);
+    }
+
+    .manifesto-p:last-child { margin-bottom: 0; }
+
+    .manifesto-p strong {
+      font-weight: 500;
+      color: var(--forge-black);
+    }
+
+    .manifesto-pullquote {
+      border-left: 3px solid var(--forge-red);
+      margin: var(--forge-space-8) 0;
+      padding: var(--forge-space-4) var(--forge-space-6);
+      background: var(--forge-tint);
+      border-radius: 0 var(--forge-radius-md) var(--forge-radius-md) 0;
+    }
+
+    .manifesto-pullquote p {
+      font-family: var(--forge-font-display);
+      font-style: italic;
+      font-size: clamp(18px, 2.5vw, 24px);
+      line-height: 1.4;
+      color: var(--forge-deep);
+      margin: 0;
+    }
+
+    .manifesto-divider {
+      width: 48px;
+      height: 2px;
+      background: var(--forge-red);
+      margin: var(--forge-space-12) auto;
+      border: none;
+    }
+
+    .manifesto-principles {
+      background: var(--forge-black);
+      border-radius: var(--forge-radius-xl);
+      padding: var(--forge-space-8);
+      margin: var(--forge-space-8) 0;
+    }
+
+    .manifesto-principle {
+      display: flex;
+      gap: var(--forge-space-5);
+      padding: var(--forge-space-5) 0;
+      border-bottom: 0.5px solid rgba(245,243,238,0.08);
+    }
+
+    .manifesto-principle:last-child { border-bottom: none; padding-bottom: 0; }
+    .manifesto-principle:first-child { padding-top: 0; }
+
+    .manifesto-principle-num {
+      font-family: var(--forge-font-mono);
+      font-size: 12px;
+      color: var(--forge-red);
+      font-weight: 500;
+      flex-shrink: 0;
+      padding-top: 3px;
+      min-width: 24px;
+    }
+
+    .manifesto-principle-title {
+      font-family: var(--forge-font-body);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--forge-offwhite);
+      margin-bottom: 4px;
+    }
+
+    .manifesto-principle-desc {
+      font-family: var(--forge-font-body);
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--forge-stone);
+    }
+
+    .manifesto-cta {
+      text-align: center;
+      padding: var(--forge-space-12) var(--forge-space-6);
+      background: var(--forge-black);
+      border-radius: var(--forge-radius-xl);
+      margin-top: var(--forge-space-12);
+    }
+
+    .manifesto-cta-title {
+      font-family: var(--forge-font-display);
+      font-size: clamp(28px, 4vw, 44px);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: var(--forge-offwhite);
+      margin-bottom: var(--forge-space-4);
+    }
+
+    .manifesto-cta-title em {
+      font-style: italic;
+      color: var(--forge-ember);
+    }
+
+    .manifesto-cta-sub {
+      font-size: 16px;
+      color: var(--forge-stone);
+      margin-bottom: var(--forge-space-8);
+      line-height: 1.6;
+    }
+
+    .manifesto-cta-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--forge-space-3);
+      flex-wrap: wrap;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAV ── -->
+  <header>
+    <nav class="forge-nav" aria-label="Main navigation">
+      <a href="index.html" class="forge-nav-logo" aria-label="Forge home">
+        <svg width="28" height="28" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+          <rect width="64" height="64" rx="10" fill="#1a1917"/>
+          <path d="M14 50 L14 18 L32 18 L32 26 L22 26 L22 33 L30 33 L30 41 L22 41 L22 50 Z" fill="#f5f3ee"/>
+          <rect x="34" y="18" width="10" height="8" rx="1" fill="#c8410a"/>
+        </svg>
+        Forge
+      </a>
+
+      <ul class="forge-nav-links" role="list">
+        <li><a href="docs.html">Docs</a></li>
+        <li><a href="modules.html">Modules</a></li>
+        <li><a href="manifesto.html" class="active" aria-current="page">Manifesto</a></li>
+      </ul>
+
+      <div style="display:flex;align-items:center;gap:8px">
+        <a href="https://github.com/jlogan839-forge/forge-ui"
+           class="ui-btn ui-btn-sm ui-btn-ghost"
+           target="_blank" rel="noopener noreferrer"
+           aria-label="View Forge on GitHub">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+            <path d="M7 0.5C3.41 0.5 0.5 3.41 0.5 7c0 2.87 1.86 5.3 4.44 6.16.32.06.44-.14.44-.31v-1.09c-1.8.39-2.18-.87-2.18-.87-.3-.75-.72-.95-.72-.95-.59-.4.04-.4.04-.4.65.05 1 .67 1 .67.58 1 1.53.71 1.9.54.06-.42.23-.71.41-.87-1.44-.16-2.95-.72-2.95-3.2 0-.71.25-1.28.67-1.74-.07-.16-.29-.82.06-1.71 0 0 .55-.18 1.8.67A6.3 6.3 0 017 3.87c.56 0 1.12.08 1.64.23 1.25-.85 1.8-.67 1.8-.67.35.89.13 1.55.06 1.71.42.46.67 1.03.67 1.74 0 2.49-1.52 3.04-2.96 3.2.23.2.44.6.44 1.2v1.79c0 .17.11.38.44.31A6.5 6.5 0 0013.5 7c0-3.59-2.91-6.5-6.5-6.5z" fill="currentColor"/>
+          </svg>
+          GitHub
+        </a>
+        <a href="docs.html" class="ui-btn ui-btn-sm ui-btn-accent">Get started</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- ── HERO ── -->
+    <section class="manifesto-hero forge-surface-dark" aria-labelledby="manifesto-title">
+      <div class="forge-container-sm">
+        <div class="manifesto-eyebrow">Manifesto</div>
+        <h1 class="manifesto-headline" id="manifesto-title">
+          Great software<br>
+          shouldn't cost<br>
+          a <em>fortune.</em>
+        </h1>
+        <p class="manifesto-intro">
+          For too long, powerful tools have been locked behind enterprise contracts
+          that only the largest companies can afford. Forge exists to change that,
+          putting professional-grade, accessible UI in the hands of anyone
+          who wants to build something real.
+        </p>
+      </div>
+    </section>
+
+    <!-- ── BODY ── -->
+    <article class="manifesto-body forge-surface-light" aria-label="Manifesto content">
+      <div class="forge-container">
+
+        <!-- 01 -->
+        <div class="manifesto-section">
+          <div class="manifesto-section-num">01</div>
+          <h2 class="manifesto-section-title">
+            Small businesses deserve
+            <em>better tools.</em>
+          </h2>
+          <p class="manifesto-p">
+            The restaurant owner managing a team of twelve. The independent logistics
+            company dispatching drivers across three states. The family-run manufacturer
+            tracking inventory across two facilities. These businesses run on software,
+            and the software they can actually afford is almost never built for them.
+          </p>
+          <p class="manifesto-p">
+            The tools designed for small businesses are simplified to the point of
+            uselessness. The tools powerful enough to actually help cost more per month
+            than a full-time hire. There is an enormous gap between "good enough for
+            a startup" and "enterprise grade" and that gap is where most of the
+            world's businesses live, and where most of them are left behind.
+          </p>
+          <p class="manifesto-p">
+            <strong>Forge is built for that gap.</strong> Professional UI components,
+            domain-specific modules for supply chain, finance, HR, and CRM,
+            the building blocks of real business software, free for anyone to use.
+          </p>
+
+          <div class="manifesto-pullquote" role="blockquote">
+            <p>"There is a gap between 'good enough for a startup' and 'enterprise grade' and that's where most of the world's businesses are left behind."</p>
+          </div>
+        </div>
+
+        <hr class="manifesto-divider" aria-hidden="true">
+
+        <!-- 02 -->
+        <div class="manifesto-section">
+          <div class="manifesto-section-num">02</div>
+          <h2 class="manifesto-section-title">
+            Size shouldn't determine
+            <em>what you can build.</em>
+          </h2>
+          <p class="manifesto-p">
+            A large corporation and a ten-person team are often solving the exact
+            same problems: track inventory, manage customers, process invoices,
+            schedule people. The difference isn't the complexity of the problem.
+            It's the budget available to solve it.
+          </p>
+          <p class="manifesto-p">
+            Large companies can afford custom development, enterprise licenses,
+            and teams of consultants to integrate it all. Smaller businesses
+            get the off-the-shelf version, the one that doesn't quite fit,
+            doesn't quite work, and costs more than it should anyway.
+          </p>
+          <p class="manifesto-p">
+            <strong>Open source levels that playing field.</strong> When the UI layer
+            is free, a two-person dev shop can build the same quality interface
+            as a hundred-person engineering team. The only variable that matters
+            is what you build with it.
+          </p>
+        </div>
+
+        <hr class="manifesto-divider" aria-hidden="true">
+
+        <!-- 03 -->
+        <div class="manifesto-section">
+          <div class="manifesto-section-num">03</div>
+          <h2 class="manifesto-section-title">
+            Accessibility is not
+            a <em>luxury feature.</em>
+          </h2>
+          <p class="manifesto-p">
+            One in four people lives with a disability. That includes your customers,
+            your employees, and the people running the businesses that depend on
+            your software every day. When an interface fails accessibility standards,
+            it doesn't just fail an audit, it fails real people trying to do real work.
+          </p>
+          <p class="manifesto-p">
+            Accessible design has long been treated as an enterprise concern,
+            something you address when a procurement team requires it or a legal
+            team flags a risk. Small businesses rarely have either.
+            So they end up with software that excludes people by default,
+            not by intention, but by neglect.
+          </p>
+          <p class="manifesto-p">
+            <strong>Every Forge component ships WCAG 2.1 AA compliant from day one.</strong>
+            Not as a paid tier. Not as a future consideration.
+            Because the people using your software deserve nothing less,
+            regardless of the size of the business that built it.
+          </p>
+
+          <div class="manifesto-pullquote" role="blockquote">
+            <p>"Small businesses end up with software that excludes people by default, not by intention, but by neglect."</p>
+          </div>
+        </div>
+
+        <hr class="manifesto-divider" aria-hidden="true">
+
+        <!-- 04 -->
+        <div class="manifesto-section">
+          <div class="manifesto-section-num">04</div>
+          <h2 class="manifesto-section-title">
+            Free means <em>free.</em><br>
+            No asterisk.
+          </h2>
+          <p class="manifesto-p">
+            "Free" in software usually means free until it doesn't. Free up to
+            a certain number of users. Free for non-commercial projects.
+            Free until you need the one feature that actually matters.
+            Small businesses can't afford that kind of surprise.
+          </p>
+          <p class="manifesto-p">
+            Forge is MIT licensed. Use it in a commercial product. White-label it.
+            Modify every line. Build a business on top of it. Never owe us anything.
+            There is no enterprise tier, no usage limit, no license key, no call home.
+          </p>
+          <p class="manifesto-p">
+            <strong>The code you download today is the code you own forever.</strong>
+            We think that's the only honest definition of free
+            and the only model worth standing behind if the goal is genuinely
+            helping businesses that can't absorb unexpected costs.
+          </p>
+        </div>
+
+        <hr class="manifesto-divider" aria-hidden="true">
+
+        <!-- 05 — Principles -->
+        <div class="manifesto-section">
+          <div class="manifesto-section-num">05</div>
+          <h2 class="manifesto-section-title">
+            What we <em>stand by.</em>
+          </h2>
+          <p class="manifesto-p">
+            These aren't marketing promises. They are the constraints
+            we build inside of: every component, every module, every release.
+          </p>
+
+          <div class="manifesto-principles" role="list" aria-label="Forge commitments">
+
+            <div class="manifesto-principle" role="listitem">
+              <div class="manifesto-principle-num">I</div>
+              <div>
+                <div class="manifesto-principle-title">Built for builders of all sizes</div>
+                <div class="manifesto-principle-desc">
+                  Solo developer, small agency, or growing company,
+                  Forge is built to fit your context without an enterprise
+                  contract, a sales call, or a minimum seat count.
+                </div>
+              </div>
+            </div>
+
+            <div class="manifesto-principle" role="listitem">
+              <div class="manifesto-principle-num">II</div>
+              <div>
+                <div class="manifesto-principle-title">Free forever, no asterisk</div>
+                <div class="manifesto-principle-desc">
+                  The Core Kit and every domain module will always be MIT licensed.
+                  No tiers, no feature gating, no "contact sales."
+                  What's free today stays free.
+                </div>
+              </div>
+            </div>
+
+            <div class="manifesto-principle" role="listitem">
+              <div class="manifesto-principle-num">III</div>
+              <div>
+                <div class="manifesto-principle-title">Accessibility before aesthetics</div>
+                <div class="manifesto-principle-desc">
+                  Every component ships WCAG 2.1 AA compliant. If a design choice
+                  fails a contrast check or breaks keyboard navigation,
+                  the design changes, not the standard.
+                </div>
+              </div>
+            </div>
+
+            <div class="manifesto-principle" role="listitem">
+              <div class="manifesto-principle-num">IV</div>
+              <div>
+                <div class="manifesto-principle-title">Works with what you already have</div>
+                <div class="manifesto-principle-desc">
+                  Forge never requires a specific framework, runtime, or hosting provider.
+                  Django, Rails, Laravel, plain HTML, using a script tag is enough.
+                  You shouldn't have to rebuild to benefit.
+                </div>
+              </div>
+            </div>
+
+            <div class="manifesto-principle" role="listitem">
+              <div class="manifesto-principle-num">V</div>
+              <div>
+                <div class="manifesto-principle-title">Built in public</div>
+                <div class="manifesto-principle-desc">
+                  Every decision, roadmap item, and breaking change happens
+                  on GitHub. No private roadmaps, no closed betas,
+                  no features reserved for people who pay more.
+                </div>
+              </div>
+            </div>
+
+            <div class="manifesto-principle" role="listitem">
+              <div class="manifesto-principle-num">VI</div>
+              <div>
+                <div class="manifesto-principle-title">No dark patterns, ever</div>
+                <div class="manifesto-principle-desc">
+                  Forge will never ship a component designed to manipulate
+                  or deceive users. The businesses using this kit deserve tools
+                  that respect the people their software serves.
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <hr class="manifesto-divider" aria-hidden="true">
+
+        <!-- 06 -->
+        <div class="manifesto-section">
+          <div class="manifesto-section-num">06</div>
+          <h2 class="manifesto-section-title">
+            This works when
+            <em>we build it together.</em>
+          </h2>
+          <p class="manifesto-p">
+            Forge is not a company with a roadmap locked behind closed doors.
+            It is a codebase with a point of view, maintained by developers who
+            believe the tools that power small businesses should be as capable
+            as the ones built for the largest companies on earth.
+          </p>
+          <p class="manifesto-p">
+            Fix a bug. Add a component. Build a module for your industry.
+            Write a guide for your framework. Translate the docs. File an issue.
+            Every contribution makes Forge more useful for every business
+            that deserves better software and can't afford to wait for it.
+          </p>
+          <p class="manifesto-p">
+            <strong>The best software ever built for small business will be built
+            by people who care about small business.</strong> That might be you.
+          </p>
+        </div>
+
+        <!-- CTA -->
+        <div class="manifesto-cta" role="complementary" aria-label="Get started with Forge">
+          <h2 class="manifesto-cta-title">
+            Start <em>building.</em>
+          </h2>
+          <p class="manifesto-cta-sub">
+            Two files. No build step. No invoice.<br>
+            Professional UI for any backend, free forever.
+          </p>
+          <div class="manifesto-cta-actions">
+            <a href="docs.html" class="ui-btn ui-btn-lg ui-btn-accent">
+              Read the docs
+            </a>
+            <a href="https://github.com/jlogan839-forge/forge-ui"
+               class="ui-btn ui-btn-lg"
+               style="color:var(--forge-offwhite);border-color:rgba(245,243,238,0.25)"
+               target="_blank" rel="noopener noreferrer">
+              View on GitHub
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </article>
+
+  </main>
+
+  <!-- ── FOOTER ── -->
+  <footer class="forge-surface-light">
+    <div class="forge-container">
+      <div class="forge-footer">
+        <span>Forge UI Kit · MIT License · Free forever</span>
+        <nav aria-label="Footer links" style="display:flex;gap:16px">
+          <a href="docs.html"      style="color:inherit;text-decoration:none">Docs</a>
+          <a href="modules.html"   style="color:inherit;text-decoration:none">Modules</a>
+          <a href="manifesto.html" style="color:inherit;text-decoration:none">Manifesto</a>
+          <a href="https://github.com/jlogan839-forge/forge-ui"
+             style="color:inherit;text-decoration:none"
+             target="_blank" rel="noopener noreferrer">GitHub</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <script src="forge-ui-kit.js"></script>
+</body>
+</html>
