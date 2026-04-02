@@ -1057,7 +1057,7 @@ body {
 }
 
 /**
- * Light surface â€” warm off-white background.
+ * Light surface - warm off-white background.
  * Use for main page body, docs, content sections.
  * This is the default for most pages.
  *
@@ -1091,7 +1091,7 @@ body {
 }
 
 /**
- * White surface â€” pure white background.
+ * White surface - pure white background.
  * Use for cards, modals, docs content areas
  * that need maximum contrast.
  *
@@ -1125,7 +1125,7 @@ body {
 }
 
 /**
- * Accent surface â€” forge red background.
+ * Accent surface - forge red background.
  * Use sparingly: CTAs, banners, highlight bars.
  * All text flips to off-white automatically.
  *
@@ -1204,9 +1204,9 @@ body {
 }
 
 
-/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+/*  ----------------------------------------------------
    19. SPACING & LAYOUT UTILITIES
-   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+   ----------------------------------------------------- */
 .forge-sr-only {
   position: absolute;
   width: 1px; height: 1px;
@@ -1234,10 +1234,29 @@ body {
 .forge-mb-6 { margin-bottom: var(--forge-space-6); }
 .forge-mb-8 { margin-bottom: var(--forge-space-8); }
 
+/* ── MOBILE NAV ── */
+@media (max-width: 768px) {
+  .forge-nav {
+    padding: 0 var(--forge-space-4);
+  }
 
-/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+  .forge-nav-links {
+    display: none;
+  }
+
+  .forge-nav .ui-btn-ghost {
+    display: none;
+  }
+
+  .forge-container,
+  .forge-container-sm {
+    padding: 0 var(--forge-space-4);
+  }
+}
+
+/* ----------------------------------------------------
    20. REDUCED MOTION
-   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+   ---------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
   .ui-btn,
   .ui-input,
