@@ -25,13 +25,16 @@ Small businesses and independent developers deserve the same quality UI as Fortu
 
 ## Quick start
 
-```html
+### Via npm
+\`\`\`bash
+npm install @jlogan839-forge/forge-ui
+\`\`\`
+
+### Via CDN / direct download
+\`\`\`html
 <link rel="stylesheet" href="forge-ui-kit.css">
 <script src="forge-ui-kit.js"></script>
-
-<!-- That's it. Start building. -->
-<button class="ui-btn ui-btn-accent">Ship it</button>
-```
+\`\`\`
 
 [Download the latest release →](https://github.com/jlogan839-forge/forge-ui/releases)
 
@@ -292,6 +295,11 @@ and approval flows. Free, MIT licensed, works with any backend.
 <link rel="stylesheet" href="ui-scm.css">
 <script src="forge-ui-kit.js"></script>
 <script src="ui-scm.js"></script>
+\`\`\`
+
+Or via npm:
+\`\`\`bash
+npm install @jlogan839-forge/forge-ui
 \`\`\`
 ---
 

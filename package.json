@@ -1,0 +1,32 @@
+{
+  "name": "@jlogan839-forge/forge-ui",
+  "version": "1.0.0",
+  "description": "Open source UI kit for any backend — accessible by default, free forever",
+  "main": "forge-ui-kit.js",
+  "style": "forge-ui-kit.css",
+  "files": [
+    "forge-ui-kit.css",
+    "forge-ui-kit.js",
+    "ui-scm.css",
+    "ui-scm.js",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "ui", "css", "accessibility", "wcag",
+    "ui-kit", "design-system", "open-source",
+    "enterprise", "scm", "supply-chain",
+    "django", "rails", "laravel", "spring",
+    "no-framework", "vanilla-css", "vanilla-js"
+  ],
+  "author": "jlogan839-forge (https://jlogan839-forge.github.io/forge-ui)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jlogan839-forge/forge-ui.git"
+  },
+  "homepage": "https://jlogan839-forge.github.io/forge-ui",
+  "bugs": {
+    "url": "https://github.com/jlogan839-forge/forge-ui/issues"
+  }
+}
