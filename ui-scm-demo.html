@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Forge UI — SCM Module Demo</title>
+  <meta name="description" content="Live demo of the Forge SCM module — purchase orders, suppliers, shipment tracking, inventory, and approval flows.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,700;1,400&family=DM+Sans:wght@400;500&family=DM+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="forge-ui-kit.css">
+  <link rel="stylesheet" href="ui-scm.css">
+  <style>
+    body {
+      background: var(--color-background-tertiary);
+      margin: 0;
+    }
+
+    .demo-topbar {
+      background: var(--forge-black);
+      padding: 10px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      border-bottom: 0.5px solid rgba(245,243,238,0.08);
+    }
+
+    .demo-topbar-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .demo-topbar-name {
+      font-family: var(--forge-font-display);
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--forge-offwhite);
+      letter-spacing: -0.02em;
+    }
+
+    .demo-topbar-module {
+      font-size: 12px;
+      color: var(--forge-stone);
+      font-family: var(--forge-font-body);
+    }
+
+    .demo-topbar-links {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .demo-sidebar {
+      position: fixed;
+      top: 45px;
+      left: 0;
+      width: 200px;
+      height: calc(100vh - 45px);
+      background: var(--color-background-primary);
+      border-right: 0.5px solid var(--color-border-tertiary);
+      padding: 16px 0;
+      overflow-y: auto;
+      z-index: 10;
+    }
+
+    .demo-sidebar-section {
+      padding: 0 12px;
+      margin-bottom: 20px;
+    }
+
+    .demo-sidebar-label {
+      font-size: 10px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--color-text-tertiary);
+      padding: 0 8px;
+      margin-bottom: 4px;
+    }
+
+    .demo-sidebar-link {
+      display: block;
+      padding: 7px 8px;
+      font-size: 13px;
+      color: var(--color-text-secondary);
+      text-decoration: none;
+      border-radius: var(--forge-radius-sm);
+      transition: all var(--forge-transition);
+    }
+
+    .demo-sidebar-link:hover {
+      background: var(--color-background-secondary);
+      color: var(--color-text-primary);
+    }
+
+    .demo-sidebar-link.active {
+      background: var(--forge-tint);
+      color: var(--forge-red);
+      font-weight: 500;
+    }
+
+    .demo-main {
+      margin-left: 200px;
+      min-height: calc(100vh - 45px);
+    }
+
+    @media (max-width: 768px) {
+      .demo-sidebar { display: none; }
+      .demo-main { margin-left: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top bar -->
+  <div class="demo-topbar" role="banner">
+    <a href="index.html" class="demo-topbar-brand" aria-label="Forge home">
+      <svg width="22" height="22" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+        <rect width="64" height="64" rx="10" fill="#c8410a"/>
+        <path d="M14 50 L14 18 L32 18 L32 26 L22 26 L22 33 L30 33 L30 41 L22 41 L22 50 Z" fill="#f5f3ee"/>
+        <rect x="34" y="18" width="10" height="8" rx="1" fill="#f5f3ee" opacity="0.8"/>
+      </svg>
+      <div>
+        <div class="demo-topbar-name">Forge UI</div>
+        <div class="demo-topbar-module">SCM Module — Demo</div>
+      </div>
+    </a>
+    <div class="demo-topbar-links">
+      <a href="modules.html" class="ui-btn ui-btn-sm ui-btn-ghost"
+         style="color:var(--forge-stone);border-color:rgba(245,243,238,0.15)">
+        Back to modules
+      </a>
+      <a href="https://github.com/yourusername/forge-ui"
+         class="ui-btn ui-btn-sm ui-btn-accent"
+         target="_blank" rel="noopener noreferrer">
+        GitHub
+      </a>
+    </div>
+  </div>
+
+  <!-- Sidebar -->
+  <nav class="demo-sidebar" aria-label="Demo sections">
+    <div class="demo-sidebar-section">
+      <div class="demo-sidebar-label">Overview</div>
+      <a href="#dashboard" class="demo-sidebar-link active">Dashboard</a>
+    </div>
+    <div class="demo-sidebar-section">
+      <div class="demo-sidebar-label">Components</div>
+      <a href="#purchase-orders" class="demo-sidebar-link">Purchase orders</a>
+      <a href="#suppliers" class="demo-sidebar-link">Suppliers</a>
+      <a href="#shipments" class="demo-sidebar-link">Shipments</a>
+      <a href="#inventory" class="demo-sidebar-link">Inventory</a>
+      <a href="#approvals" class="demo-sidebar-link">Approvals</a>
+      <a href="#badges" class="demo-sidebar-link">Status badges</a>
+    </div>
+  </nav>
+
+  <!-- Main content -->
+  <main class="demo-main" id="dashboard">
+    <div class="scm-dashboard">
+
+      <!-- Dashboard header -->
+      <div class="scm-dashboard-header">
+        <div>
+          <div class="scm-dashboard-title">Supply chain</div>
+          <div class="scm-dashboard-subtitle">Meridian Distribution Co. · Week of Apr 2, 2026</div>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="ui-btn ui-btn-sm">Export</button>
+          <button class="ui-btn ui-btn-sm ui-btn-accent">New PO</button>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="scm-stats" role="region" aria-label="Key metrics">
+        <div class="scm-stat">
+          <div class="scm-stat-label">Open POs</div>
+          <div class="scm-stat-value">24</div>
+          <div class="scm-stat-delta up">↑ 3 this week</div>
+        </div>
+        <div class="scm-stat">
+          <div class="scm-stat-label">Pending approval</div>
+          <div class="scm-stat-value">6</div>
+          <div class="scm-stat-delta flat">— unchanged</div>
+        </div>
+        <div class="scm-stat">
+          <div class="scm-stat-label">In transit</div>
+          <div class="scm-stat-value">11</div>
+          <div class="scm-stat-delta up">↑ 2 shipped today</div>
+        </div>
+        <div class="scm-stat">
+          <div class="scm-stat-label">Low stock items</div>
+          <div class="scm-stat-value">4</div>
+          <div class="scm-stat-delta down">↑ 1 since yesterday</div>
+        </div>
+        <div class="scm-stat">
+          <div class="scm-stat-label">PO value (MTD)</div>
+          <div class="scm-stat-value">$284k</div>
+          <div class="scm-stat-delta up">↑ 12% vs last month</div>
+        </div>
+      </div>
+
+      <!-- Purchase Orders -->
+      <section id="purchase-orders" aria-labelledby="po-heading">
+        <div class="scm-section-label" id="po-heading">Purchase orders</div>
+        <div class="scm-grid-3">
+
+          <article class="scm-po" aria-label="Purchase order PO-2024-0891">
+            <div class="scm-po-header">
+              <div class="scm-po-header-left">
+                <div class="scm-po-number">PO-2024-0891</div>
+                <div class="scm-po-supplier">Hartwell Manufacturing</div>
+              </div>
+              <span class="scm-badge scm-badge-approved">Approved</span>
+            </div>
+            <div class="scm-po-body">
+              <ul class="scm-po-lines" aria-label="Line items">
+                <li class="scm-po-line">
+                  <span class="scm-po-line-name">Steel bracket assembly</span>
+                  <span class="scm-po-line-qty">200 units</span>
+                  <span class="scm-po-line-price">$4,800.00</span>
+                </li>
+                <li class="scm-po-line">
+                  <span class="scm-po-line-name">Hex bolt M8 × 40mm</span>
+                  <span class="scm-po-line-qty">2,000 units</span>
+                  <span class="scm-po-line-price">$320.00</span>
+                </li>
+                <li class="scm-po-line">
+                  <span class="scm-po-line-name">Mounting plate 6061-T6</span>
+                  <span class="scm-po-line-qty">50 units</span>
+                  <span class="scm-po-line-price">$1,250.00</span>
+                </li>
+              </ul>
+              <hr class="scm-po-divider" aria-hidden="true">
+              <div class="scm-po-total">
+                <span class="scm-po-total-label">Total</span>
+                <span class="scm-po-total-value">$6,370.00</span>
+              </div>
+            </div>
+            <div class="scm-po-footer">
+              <div class="scm-po-meta">
+                <span class="scm-po-meta-item">Due Apr 14</span>
+                <span class="scm-po-meta-item">Net 30</span>
+              </div>
+              <button class="ui-btn ui-btn-sm ui-btn-ghost">View</button>
+            </div>
+          </article>
+
+          <article class="scm-po" aria-label="Purchase order PO-2024-0892">
+            <div class="scm-po-header">
+              <div class="scm-po-header-left">
+                <div class="scm-po-number">PO-2024-0892</div>
+                <div class="scm-po-supplier">Coastal Plastics Group</div>
+              </div>
+              <span class="scm-badge scm-badge-pending">Pending approval</span>
+            </div>
+            <div class="scm-po-body">
+              <ul class="scm-po-lines" aria-label="Line items">
+                <li class="scm-po-line">
+                  <span class="scm-po-line-name">ABS housing unit Type-C</span>
+                  <span class="scm-po-line-qty">500 units</span>
+                  <span class="scm-po-line-price">$3,750.00</span>
+                </li>
+                <li class="scm-po-line">
+                  <span class="scm-po-line-name">Polycarbonate lens cover</span>
+                  <span class="scm-po-line-qty">500 units</span>
+                  <span class="scm-po-line-price">$1,500.00</span>
+                </li>
+              </ul>
+              <hr class="scm-po-divider" aria-hidden="true">
+              <div class="scm-po-total">
+                <span class="scm-po-total-label">Total</span>
+                <span class="scm-po-total-value">$5,250.00</span>
+              </div>
+            </div>
+            <div class="scm-po-footer">
+              <div class="scm-po-meta">
+                <span class="scm-po-meta-item">Due Apr 21</span>
+                <span class="scm-po-meta-item">Net 30</span>
+              </div>
+              <button class="ui-btn ui-btn-sm ui-btn-ghost">View</button>
+            </div>
+          </article>
+
+          <article class="scm-po" aria-label="Purchase order PO-2024-0887">
+            <div class="scm-po-header">
+              <div class="scm-po-header-left">
+                <div class="scm-po-number">PO-2024-0887</div>
+                <div class="scm-po-supplier">Atlas Fasteners Inc.</div>
+              </div>
+              <span class="scm-badge scm-badge-overdue">Overdue</span>
+            </div>
+            <div class="scm-po-body">
+              <ul class="scm-po-lines" aria-label="Line items">
+                <li class="scm-po-line">
+                  <span class="scm-po-line-name">Stainless cap screw M6</span>
+                  <span class="scm-po-line-qty">5,000 units</span>
+                  <span class="scm-po-line-price">$450.00</span>
+                </li>
+                <li class="scm-po-line">
+                  <span class="scm-po-line-name">Nylon lock nut M6</span>
+                  <span class="scm-po-line-qty">5,000 units</span>
+                  <span class="scm-po-line-price">$275.00</span>
+                </li>
+              </ul>
+              <hr class="scm-po-divider" aria-hidden="true">
+              <div class="scm-po-total">
+                <span class="scm-po-total-label">Total</span>
+                <span class="scm-po-total-value">$725.00</span>
+              </div>
+            </div>
+            <div class="scm-po-footer">
+              <div class="scm-po-meta">
+                <span class="scm-po-meta-item">Was due Mar 28</span>
+              </div>
+              <button class="ui-btn ui-btn-sm ui-btn-ghost">View</button>
+            </div>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- Suppliers -->
+      <section id="suppliers" aria-labelledby="suppliers-heading">
+        <div class="scm-section-label" id="suppliers-heading">Suppliers</div>
+        <div class="scm-grid-3">
+
+          <div class="scm-supplier">
+            <div class="scm-supplier-top">
+              <div class="scm-supplier-avatar" aria-hidden="true">HM</div>
+              <div class="scm-supplier-info">
+                <div class="scm-supplier-name">Hartwell Manufacturing</div>
+                <div class="scm-supplier-category">Metal fabrication</div>
+              </div>
+              <span class="scm-badge scm-badge-approved">Active</span>
+            </div>
+            <div class="scm-supplier-stats" role="list" aria-label="Supplier metrics">
+              <div class="scm-supplier-stat" role="listitem">
+                <div class="scm-supplier-stat-value">98%</div>
+                <div class="scm-supplier-stat-label">On-time</div>
+              </div>
+              <div class="scm-supplier-stat" role="listitem">
+                <div class="scm-supplier-stat-value">14</div>
+                <div class="scm-supplier-stat-label">Open POs</div>
+              </div>
+              <div class="scm-supplier-stat" role="listitem">
+                <div class="scm-supplier-stat-value">4.9</div>
+                <div class="scm-supplier-stat-label">Rating</div>
+              </div>
+            </div>
+            <div class="scm-supplier-footer">
+              <span class="scm-supplier-contact">j.hartwell@hartwellmfg.com</span>
+              <button class="ui-btn ui-btn-sm ui-btn-ghost">Contact</button>
+            </div>
+          </div>
+
+          <div class="scm-supplier">
+            <div class="scm-supplier-top">
+              <div class="scm-supplier-avatar" aria-hidden="true">CP</div>
+              <div class="scm-supplier-info">
+                <div class="scm-supplier-name">Coastal Plastics Group</div>
+                <div class="scm-supplier-category">Injection molding</div>
+              </div>
+              <span class="scm-badge scm-badge-pending">Under review</span>
+            </div>
+            <div class="scm-supplier-stats" role="list" aria-label="Supplier metrics">
+              <div class="scm-supplier-stat" role="listitem">
+                <div class="scm-supplier-stat-value">91%</div>
+                <div class="scm-supplier-stat-label">On-time</div>
+              </div>
+              <div class="scm-supplier-stat" role="listitem">
+                <div class="scm-supplier-stat-value">3</div>
+                <div class="scm-supplier-stat-label">Open POs</div>
+              </div>
+              <div class="scm-supplier-stat" role="listitem">
+                <div class="scm-supplier-stat-value">4.1</div>
+                <div class="scm-supplier-stat-label">Rating</div>
+              </div>
+            </div>
+            <div class="scm-supplier-footer">
+              <span class="scm-supplier-contact">orders@coastalplastics.com</span>
+              <button class="ui-btn ui-btn-sm ui-btn-ghost">Contact</button>
+            </div>
+          </div>
+
+          <div class="scm-supplier">
+            <div class="scm-supplier-top">
+              <div class="scm-supplier-avatar" aria-hidden="true">AF</div>
+              <div class="scm-supplier-info">
+                <div class="scm-supplier-name">Atlas Fasteners Inc.</div>
+                <div class="scm-supplier-category">Hardware & fasteners</div>
+              </div>
+              <span class="scm-badge scm-badge-overdue">Late delivery</span>
+            </div>
+            <div class="scm-supplier-stats" role="list" aria-label="Supplier metrics">
+              <div class="scm-supplier-stat" role="listitem">
+                <div class="scm-supplier-stat-value">78%</div>
+                <div class="scm-supplier-stat-label">On-time</div>
+              </div>
+              <div class="scm-supplier-stat" role="listitem">
+                <div class="scm-supplier-stat-value">5</div>
+                <div class="scm-supplier-stat-label">Open POs</div>
+              </div>
+              <div class="scm-supplier-stat" role="listitem">
+                <div class="scm-supplier-stat-value">3.2</div>
+                <div class="scm-supplier-stat-label">Rating</div>
+              </div>
+            </div>
+            <div class="scm-supplier-footer">
+              <span class="scm-supplier-contact">supply@atlasfasteners.com</span>
+              <button class="ui-btn ui-btn-sm ui-btn-ghost">Contact</button>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Shipments -->
+      <section id="shipments" aria-labelledby="shipments-heading">
+        <div class="scm-section-label" id="shipments-heading">Shipments in transit</div>
+        <div class="scm-grid-2">
+
+          <div class="scm-shipment" data-scm-step="2">
+            <div class="scm-shipment-header">
+              <div>
+                <div class="scm-shipment-id">SHP-2024-0341</div>
+                <div class="scm-shipment-route">Hartwell Mfg → Meridian DC, Atlanta</div>
+              </div>
+              <span class="scm-badge scm-badge-shipped">In transit</span>
+            </div>
+            <div class="scm-shipment-body">
+              <div class="scm-shipment-steps" role="list" aria-label="Shipment progress">
+                <div class="scm-shipment-progress-line" style="width:0" aria-hidden="true"></div>
+                <div class="scm-shipment-step" role="listitem">
+                  <div class="scm-shipment-step-dot" aria-hidden="true"></div>
+                  <div class="scm-shipment-step-label">Order placed</div>
+                </div>
+                <div class="scm-shipment-step" role="listitem">
+                  <div class="scm-shipment-step-dot" aria-hidden="true"></div>
+                  <div class="scm-shipment-step-label">Picked up</div>
+                </div>
+                <div class="scm-shipment-step" role="listitem">
+                  <div class="scm-shipment-step-dot" aria-hidden="true"></div>
+                  <div class="scm-shipment-step-label">In transit</div>
+                </div>
+                <div class="scm-shipment-step" role="listitem">
+                  <div class="scm-shipment-step-dot" aria-hidden="true"></div>
+                  <div class="scm-shipment-step-label">Out for delivery</div>
+                </div>
+                <div class="scm-shipment-step" role="listitem">
+                  <div class="scm-shipment-step-dot" aria-hidden="true"></div>
+                  <div class="scm-shipment-step-label">Delivered</div>
+                </div>
+              </div>
+              <div class="scm-shipment-details">
+                <div class="scm-shipment-detail">
+                  <div class="scm-shipment-detail-label">Carrier</div>
+                  <div class="scm-shipment-detail-value">FedEx Freight</div>
+                </div>
+                <div class="scm-shipment-detail">
+                  <div class="scm-shipment-detail-label">Tracking</div>
+                  <div class="scm-shipment-detail-value" style="font-family:var(--forge-font-mono);font-size:12px">7748291046382</div>
+                </div>
+                <div class="scm-shipment-detail">
+                  <div class="scm-shipment-detail-label">Weight</div>
+                  <div class="scm-shipment-detail-value">342 lbs</div>
+                </div>
+                <div class="scm-shipment-detail">
+                  <div class="scm-shipment-detail-label">Est. delivery</div>
+                  <div class="scm-shipment-detail-value">Apr 5, 2026</div>
+                </div>
+              </div>
+            </div>
+            <div class="scm-shipment-footer">
+              <span class="scm-shipment-carrier">PO-2024-0891 · Steel brackets & hardware</span>
+              <span class="scm-shipment-eta">ETA Apr 5</span>
+            </div>
+          </div>
+
+          <div class="scm-shipment" data-scm-step="3">
+            <div class="scm-shipment-header">
+              <div>
+                <div class="scm-shipment-id">SHP-2024-0338</div>
+                <div class="scm-shipment-route">Midwest Components → Meridian DC, Atlanta</div>
+              </div>
+              <span class="scm-badge scm-badge-shipped">In transit</span>
+            </div>
+            <div class="scm-shipment-body">
+              <div class="scm-shipment-steps" role="list" aria-label="Shipment progress">
+                <div class="scm-shipment-progress-line" style="width:0" aria-hidden="true"></div>
+                <div class="scm-shipment-step" role="listitem">
+                  <div class="scm-shipment-step-dot" aria-hidden="true"></div>
+                  <div class="scm-shipment-step-label">Order placed</div>
+                </div>
+                <div class="scm-shipment-step" role="listitem">
+                  <div class="scm-shipment-step-dot" aria-hidden="true"></div>
+                  <div class="scm-shipment-step-label">Picked up</div>
+                </div>
+                <div class="scm-shipment-step" role="listitem">
+                  <div class="scm-shipment-step-dot" aria-hidden="true"></div>
+                  <div class="scm-shipment-step-label">In transit</div>
+                </div>
+                <div class="scm-shipment-step" role="listitem">
+                  <div class="scm-shipment-step-dot" aria-hidden="true"></div>
+                  <div class="scm-shipment-step-label">Out for delivery</div>
+                </div>
+                <div class="scm-shipment-step" role="listitem">
+                  <div class="scm-shipment-step-dot" aria-hidden="true"></div>
+                  <div class="scm-shipment-step-label">Delivered</div>
+                </div>
+              </div>
+              <div class="scm-shipment-details">
+                <div class="scm-shipment-detail">
+                  <div class="scm-shipment-detail-label">Carrier</div>
+                  <div class="scm-shipment-detail-value">UPS Ground</div>
+                </div>
+                <div class="scm-shipment-detail">
+                  <div class="scm-shipment-detail-label">Tracking</div>
+                  <div class="scm-shipment-detail-value" style="font-family:var(--forge-font-mono);font-size:12px">1Z999AA10123456784</div>
+                </div>
+                <div class="scm-shipment-detail">
+                  <div class="scm-shipment-detail-label">Weight</div>
+                  <div class="scm-shipment-detail-value">88 lbs</div>
+                </div>
+                <div class="scm-shipment-detail">
+                  <div class="scm-shipment-detail-label">Est. delivery</div>
+                  <div class="scm-shipment-detail-value">Apr 3, 2026</div>
+                </div>
+              </div>
+            </div>
+            <div class="scm-shipment-footer">
+              <span class="scm-shipment-carrier">PO-2024-0885 · Electronic components</span>
+              <span class="scm-shipment-eta">ETA tomorrow</span>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Inventory -->
+      <section id="inventory" aria-labelledby="inventory-heading">
+        <div class="scm-section-label" id="inventory-heading">Inventory</div>
+        <div class="scm-grid-full">
+          <div class="scm-inventory">
+            <div class="scm-inventory-header">
+              <div class="scm-inventory-title">Stock levels — Warehouse A</div>
+              <button class="ui-btn ui-btn-sm ui-btn-ghost">View all</button>
+            </div>
+            <table class="scm-inventory-table" aria-label="Inventory stock levels">
+              <thead>
+                <tr>
+                  <th scope="col">SKU</th>
+                  <th scope="col">Item</th>
+                  <th scope="col">Category</th>
+                  <th scope="col">On hand</th>
+                  <th scope="col">Reorder at</th>
+                  <th scope="col">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr data-qty="842" data-reorder="200">
+                  <td><span class="scm-inventory-sku">BRK-ST-200</span></td>
+                  <td><span class="scm-inventory-name">Steel bracket assembly</span></td>
+                  <td>Metal fabrication</td>
+                  <td><span class="scm-inventory-qty">842</span></td>
+                  <td><span class="scm-inventory-reorder">200</span></td>
+                  <td><span class="scm-badge scm-badge-approved">In stock</span></td>
+                </tr>
+                <tr data-qty="112" data-reorder="150">
+                  <td><span class="scm-inventory-sku">ABS-HC-500</span></td>
+                  <td><span class="scm-inventory-name">ABS housing unit Type-C</span></td>
+                  <td>Plastics</td>
+                  <td><span class="scm-inventory-qty">112</span></td>
+                  <td><span class="scm-inventory-reorder">150</span></td>
+                  <td><span class="scm-badge scm-badge-overdue">Low stock</span></td>
+                </tr>
+                <tr data-qty="3200" data-reorder="500">
+                  <td><span class="scm-inventory-sku">BLT-HX-M8</span></td>
+                  <td><span class="scm-inventory-name">Hex bolt M8 × 40mm</span></td>
+                  <td>Fasteners</td>
+                  <td><span class="scm-inventory-qty">3200</span></td>
+                  <td><span class="scm-inventory-reorder">500</span></td>
+                  <td><span class="scm-badge scm-badge-approved">In stock</span></td>
+                </tr>
+                <tr data-qty="44" data-reorder="100">
+                  <td><span class="scm-inventory-sku">PCB-CTL-V2</span></td>
+                  <td><span class="scm-inventory-name">Control board PCB v2</span></td>
+                  <td>Electronics</td>
+                  <td><span class="scm-inventory-qty">44</span></td>
+                  <td><span class="scm-inventory-reorder">100</span></td>
+                  <td><span class="scm-badge scm-badge-overdue">Low stock</span></td>
+                </tr>
+                <tr data-qty="520" data-reorder="200">
+                  <td><span class="scm-inventory-sku">PLT-AL-6061</span></td>
+                  <td><span class="scm-inventory-name">Mounting plate 6061-T6</span></td>
+                  <td>Metal fabrication</td>
+                  <td><span class="scm-inventory-qty">520</span></td>
+                  <td><span class="scm-inventory-reorder">200</span></td>
+                  <td><span class="scm-badge scm-badge-approved">In stock</span></td>
+                </tr>
+                <tr data-qty="0" data-reorder="250">
+                  <td><span class="scm-inventory-sku">LNS-PC-500</span></td>
+                  <td><span class="scm-inventory-name">Polycarbonate lens cover</span></td>
+                  <td>Plastics</td>
+                  <td><span class="scm-inventory-qty">0</span></td>
+                  <td><span class="scm-inventory-reorder">250</span></td>
+                  <td><span class="scm-badge scm-badge-cancelled">Out of stock</span></td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="scm-inventory-footer">
+              <span>6 of 142 items shown</span>
+              <span>2 items below reorder threshold</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Approvals -->
+      <section id="approvals" aria-labelledby="approvals-heading">
+        <div class="scm-section-label" id="approvals-heading">Pending approvals — interactive demo</div>
+        <div class="scm-grid-2">
+
+          <div class="scm-approval" aria-label="Approval flow for PO-2024-0892">
+            <div class="scm-approval-header">
+              <div class="scm-approval-title">PO-2024-0892 — Coastal Plastics</div>
+              <span class="scm-badge scm-badge-pending">Awaiting approval</span>
+            </div>
+            <div class="scm-approval-body">
+              <div class="scm-approval-summary">
+                <span class="scm-approval-summary-label">Total order value</span>
+                <span class="scm-approval-summary-value">$5,250.00</span>
+              </div>
+              <div class="scm-approval-steps" role="list" aria-label="Approval steps">
+                <div class="scm-approval-step step-done" role="listitem">
+                  <div class="scm-approval-step-icon" aria-hidden="true">✓</div>
+                  <div class="scm-approval-step-info">
+                    <div class="scm-approval-step-name">Procurement manager</div>
+                    <div class="scm-approval-step-meta">Approved Mar 31, 2026 · R. Chen</div>
+                  </div>
+                </div>
+                <div class="scm-approval-step step-active" role="listitem" aria-current="step">
+                  <div class="scm-approval-step-icon" aria-hidden="true">…</div>
+                  <div class="scm-approval-step-info">
+                    <div class="scm-approval-step-name">Finance director</div>
+                    <div class="scm-approval-step-meta">Awaiting review · M. Torres</div>
+                  </div>
+                </div>
+                <div class="scm-approval-step step-pending" role="listitem">
+                  <div class="scm-approval-step-icon" aria-hidden="true">3</div>
+                  <div class="scm-approval-step-info">
+                    <div class="scm-approval-step-name">VP Operations</div>
+                    <div class="scm-approval-step-meta">Pending</div>
+                  </div>
+                </div>
+              </div>
+              <div class="scm-approval-actions">
+                <button class="ui-btn ui-btn-approve" data-scm-approve
+                        aria-label="Approve purchase order PO-2024-0892">
+                  Approve
+                </button>
+                <button class="ui-btn ui-btn-reject" data-scm-reject
+                        data-scm-reject-reason="Requires additional quotes"
+                        aria-label="Reject purchase order PO-2024-0892">
+                  Reject
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="scm-approval" aria-label="Approval flow for PO-2024-0895">
+            <div class="scm-approval-header">
+              <div class="scm-approval-title">PO-2024-0895 — Midwest Components</div>
+              <span class="scm-badge scm-badge-pending">Awaiting approval</span>
+            </div>
+            <div class="scm-approval-body">
+              <div class="scm-approval-summary">
+                <span class="scm-approval-summary-label">Total order value</span>
+                <span class="scm-approval-summary-value">$12,800.00</span>
+              </div>
+              <div class="scm-approval-steps" role="list" aria-label="Approval steps">
+                <div class="scm-approval-step step-active" role="listitem" aria-current="step">
+                  <div class="scm-approval-step-icon" aria-hidden="true">…</div>
+                  <div class="scm-approval-step-info">
+                    <div class="scm-approval-step-name">Procurement manager</div>
+                    <div class="scm-approval-step-meta">Awaiting review · R. Chen</div>
+                  </div>
+                </div>
+                <div class="scm-approval-step step-pending" role="listitem">
+                  <div class="scm-approval-step-icon" aria-hidden="true">2</div>
+                  <div class="scm-approval-step-info">
+                    <div class="scm-approval-step-name">Finance director</div>
+                    <div class="scm-approval-step-meta">Pending</div>
+                  </div>
+                </div>
+                <div class="scm-approval-step step-pending" role="listitem">
+                  <div class="scm-approval-step-icon" aria-hidden="true">3</div>
+                  <div class="scm-approval-step-info">
+                    <div class="scm-approval-step-name">VP Operations</div>
+                    <div class="scm-approval-step-meta">Pending — required above $10k</div>
+                  </div>
+                </div>
+              </div>
+              <div class="scm-approval-actions">
+                <button class="ui-btn ui-btn-approve" data-scm-approve
+                        aria-label="Approve purchase order PO-2024-0895">
+                  Approve
+                </button>
+                <button class="ui-btn ui-btn-reject" data-scm-reject
+                        data-scm-reject-reason="Over budget"
+                        aria-label="Reject purchase order PO-2024-0895">
+                  Reject
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Status badges reference -->
+      <section id="badges" aria-labelledby="badges-heading">
+        <div class="scm-section-label" id="badges-heading">Status badges</div>
+        <div style="background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--forge-radius-lg);padding:20px 16px;display:flex;flex-wrap:wrap;gap:10px;align-items:center">
+          <span class="scm-badge scm-badge-draft">Draft</span>
+          <span class="scm-badge scm-badge-pending">Pending approval</span>
+          <span class="scm-badge scm-badge-approved">Approved</span>
+          <span class="scm-badge scm-badge-shipped">Shipped</span>
+          <span class="scm-badge scm-badge-delivered">Delivered</span>
+          <span class="scm-badge scm-badge-cancelled">Cancelled</span>
+          <span class="scm-badge scm-badge-overdue">Overdue</span>
+        </div>
+      </section>
+
+      <!-- Footer note -->
+      <div style="margin-top:var(--forge-space-8);padding-top:var(--forge-space-6);border-top:0.5px solid var(--color-border-tertiary);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
+        <p style="font-size:13px;color:var(--color-text-tertiary);margin:0">
+          Forge UI — SCM Module v1.0.0 · MIT License · All data is fictional demo content
+        </p>
+        <div style="display:flex;gap:8px">
+          <a href="modules.html" class="ui-btn ui-btn-sm ui-btn-ghost">All modules</a>
+          <a href="https://github.com/yourusername/forge-ui"
+             class="ui-btn ui-btn-sm ui-btn-accent"
+             target="_blank" rel="noopener noreferrer">
+            Get the code
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="forge-ui-kit.js"></script>
+  <script src="ui-scm.js"></script>
+</body>
+</html>

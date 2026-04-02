@@ -1,0 +1,911 @@
+/**
+ * Forge UI — SCM Module Stylesheet
+ * Version: 1.0.0
+ *
+ * Requires: forge-ui-kit.css
+ *
+ * Usage:
+ *   <link rel="stylesheet" href="forge-ui-kit.css">
+ *   <link rel="stylesheet" href="ui-scm.css">
+ *
+ * Components:
+ *   1.  SCM tokens & status colors
+ *   2.  SCM badge variants
+ *   3.  Purchase order card       — .scm-po
+ *   4.  Supplier card             — .scm-supplier
+ *   5.  Shipment tracker          — .scm-shipment
+ *   6.  Inventory table           — .scm-inventory
+ *   7.  Approval flow             — .scm-approval
+ *   8.  SCM stat bar              — .scm-stats
+ *   9.  SCM dashboard layout      — .scm-dashboard
+ *   10. Mobile responsive
+ */
+
+/* ═══════════════════════════════════════════
+   1. SCM TOKENS & STATUS COLORS
+   ═══════════════════════════════════════════ */
+:root {
+  /* Status colors — map to semantic roles */
+  --scm-color-draft:      #787470;
+  --scm-color-pending:    #854f0b;
+  --scm-color-approved:   #185fa5;
+  --scm-color-shipped:    #3b6d11;
+  --scm-color-delivered:  #0f6e56;
+  --scm-color-cancelled:  #a32d2d;
+  --scm-color-overdue:    #993c1d;
+
+  --scm-bg-draft:      #f1efe8;
+  --scm-bg-pending:    #faeeda;
+  --scm-bg-approved:   #e6f1fb;
+  --scm-bg-shipped:    #eaf3de;
+  --scm-bg-delivered:  #e1f5ee;
+  --scm-bg-cancelled:  #fcebeb;
+  --scm-bg-overdue:    #faece7;
+
+  /* Layout */
+  --scm-card-radius: var(--forge-radius-lg);
+  --scm-inner-radius: var(--forge-radius-md);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --scm-color-draft:     #b8b5b0;
+    --scm-color-pending:   #ef9f27;
+    --scm-color-approved:  #85b7eb;
+    --scm-color-shipped:   #97c459;
+    --scm-color-delivered: #5dcaa5;
+    --scm-color-cancelled: #f09595;
+    --scm-color-overdue:   #f0997b;
+
+    --scm-bg-draft:      #2c2a27;
+    --scm-bg-pending:    #412402;
+    --scm-bg-approved:   #042c53;
+    --scm-bg-shipped:    #173404;
+    --scm-bg-delivered:  #04342c;
+    --scm-bg-cancelled:  #501313;
+    --scm-bg-overdue:    #4a1b0c;
+  }
+}
+
+
+/* ═══════════════════════════════════════════
+   2. SCM BADGE VARIANTS
+   ═══════════════════════════════════════════ */
+.scm-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 9px;
+  border-radius: var(--forge-radius-pill);
+  font-family: var(--forge-font-body);
+  font-size: 11px;
+  font-weight: 500;
+  white-space: nowrap;
+  line-height: 1.4;
+  color: var(--forge-offwhite); 
+}
+
+.scm-badge::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.scm-badge-draft     { background: var(--scm-bg-draft);          }
+.scm-badge-draft::before     { background: var(--scm-color-draft); }
+
+.scm-badge-pending   { background: var(--scm-bg-pending);      }
+.scm-badge-pending::before   { background: var(--scm-color-pending); }
+
+.scm-badge-approved  { background: var(--scm-bg-approved);   }
+.scm-badge-approved::before  { background: var(--scm-color-approved); }
+
+.scm-badge-shipped   { background: var(--scm-bg-shipped);     }
+.scm-badge-shipped::before   { background: var(--scm-color-shipped); }
+
+.scm-badge-delivered { background: var(--scm-bg-delivered);  }
+.scm-badge-delivered::before { background: var(--scm-color-delivered); }
+
+.scm-badge-cancelled { background: var(--scm-bg-cancelled);  }
+.scm-badge-cancelled::before { background: var(--scm-color-cancelled); }
+
+.scm-badge-overdue   { background: var(--scm-bg-overdue);     }
+.scm-badge-overdue::before   { background: var(--scm-color-overdue); }
+
+
+/* ═══════════════════════════════════════════
+   3. PURCHASE ORDER CARD — .scm-po
+   ═══════════════════════════════════════════ */
+.scm-po {
+  background: var(--color-background-primary);
+  border: 0.5px solid var(--color-border-tertiary);
+  border-radius: var(--scm-card-radius);
+  overflow: hidden;
+  font-family: var(--forge-font-body);
+  transition: border-color var(--forge-transition);
+}
+
+.scm-po:hover {
+  border-color: var(--color-border-secondary);
+}
+
+.scm-po-header {
+  padding: 14px 16px 12px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  border-bottom: 0.5px solid var(--color-border-tertiary);
+}
+
+.scm-po-header-left { flex: 1; min-width: 0; }
+
+.scm-po-number {
+  font-family: var(--forge-font-mono);
+  font-size: 12px;
+  color: var(--color-text-tertiary);
+  margin-bottom: 3px;
+}
+
+.scm-po-supplier {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.scm-po-body { padding: 14px 16px; }
+
+.scm-po-lines {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.scm-po-line {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 13px;
+}
+
+.scm-po-line-name {
+  color: var(--color-text-secondary);
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.scm-po-line-qty {
+  font-family: var(--forge-font-mono);
+  font-size: 12px;
+  color: var(--color-text-tertiary);
+  white-space: nowrap;
+}
+
+.scm-po-line-price {
+  font-family: var(--forge-font-mono);
+  font-size: 12px;
+  color: var(--color-text-primary);
+  font-weight: 500;
+  white-space: nowrap;
+  min-width: 72px;
+  text-align: right;
+}
+
+.scm-po-divider {
+  border: none;
+  border-top: 0.5px solid var(--color-border-tertiary);
+  margin: 10px 0;
+}
+
+.scm-po-total {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13px;
+}
+
+.scm-po-total-label {
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+.scm-po-total-value {
+  font-family: var(--forge-font-mono);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+.scm-po-footer {
+  padding: 10px 16px;
+  border-top: 0.5px solid var(--color-border-tertiary);
+  background: var(--color-background-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.scm-po-meta {
+  font-size: 12px;
+  color: var(--color-text-tertiary);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.scm-po-meta-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+
+/* ═══════════════════════════════════════════
+   4. SUPPLIER CARD — .scm-supplier
+   ═══════════════════════════════════════════ */
+.scm-supplier {
+  background: var(--color-background-primary);
+  border: 0.5px solid var(--color-border-tertiary);
+  border-radius: var(--scm-card-radius);
+  padding: 16px;
+  font-family: var(--forge-font-body);
+  transition: border-color var(--forge-transition);
+}
+
+.scm-supplier:hover {
+  border-color: var(--color-border-secondary);
+}
+
+.scm-supplier-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.scm-supplier-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--forge-radius-md);
+  background: var(--forge-tint);
+  color: var(--forge-red);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 500;
+  flex-shrink: 0;
+  font-family: var(--forge-font-body);
+}
+
+.scm-supplier-info { flex: 1; min-width: 0; }
+
+.scm-supplier-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.scm-supplier-category {
+  font-size: 12px;
+  color: var(--color-text-tertiary);
+}
+
+.scm-supplier-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+  padding: 12px 0;
+  border-top: 0.5px solid var(--color-border-tertiary);
+  border-bottom: 0.5px solid var(--color-border-tertiary);
+  margin-bottom: 12px;
+}
+
+.scm-supplier-stat { text-align: center; }
+
+.scm-supplier-stat-value {
+  font-family: var(--forge-font-mono);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  line-height: 1.2;
+}
+
+.scm-supplier-stat-label {
+  font-size: 11px;
+  color: var(--color-text-tertiary);
+  margin-top: 2px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.scm-supplier-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.scm-supplier-contact {
+  font-size: 12px;
+  color: var(--color-text-tertiary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
+/* ═══════════════════════════════════════════
+   5. SHIPMENT TRACKER — .scm-shipment
+   ═══════════════════════════════════════════ */
+.scm-shipment {
+  background: var(--color-background-primary);
+  border: 0.5px solid var(--color-border-tertiary);
+  border-radius: var(--scm-card-radius);
+  overflow: hidden;
+  font-family: var(--forge-font-body);
+}
+
+.scm-shipment-header {
+  padding: 14px 16px 12px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  border-bottom: 0.5px solid var(--color-border-tertiary);
+}
+
+.scm-shipment-id {
+  font-family: var(--forge-font-mono);
+  font-size: 12px;
+  color: var(--color-text-tertiary);
+  margin-bottom: 3px;
+}
+
+.scm-shipment-route {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+.scm-shipment-body { padding: 20px 16px; }
+
+.scm-shipment-steps {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  position: relative;
+  padding: 0 8px;
+  margin-bottom: 20px;
+}
+
+.scm-shipment-steps::before {
+  content: '';
+  position: absolute;
+  top: 14px;
+  left: 24px;
+  right: 24px;
+  height: 1px;
+  background: var(--color-border-tertiary);
+  z-index: 0;
+}
+
+.scm-shipment-progress-line {
+  position: absolute;
+  top: 14px;
+  left: 24px;
+  height: 1px;
+  background: var(--forge-red);
+  z-index: 1;
+  transition: width 400ms ease;
+}
+
+.scm-shipment-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  z-index: 2;
+  flex: 1;
+}
+
+.scm-shipment-step-dot {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid var(--color-border-secondary);
+  background: var(--color-background-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  color: var(--color-text-tertiary);
+  transition: all 200ms;
+}
+
+.scm-shipment-step.done .scm-shipment-step-dot {
+  background: var(--forge-red);
+  border-color: var(--forge-red);
+  color: var(--forge-offwhite);
+}
+
+.scm-shipment-step.active .scm-shipment-step-dot {
+  border-color: var(--forge-red);
+  color: var(--forge-red);
+  box-shadow: 0 0 0 3px var(--forge-blush);
+}
+
+.scm-shipment-step-label {
+  font-size: 11px;
+  color: var(--color-text-tertiary);
+  text-align: center;
+  line-height: 1.3;
+  max-width: 60px;
+}
+
+.scm-shipment-step.done .scm-shipment-step-label,
+.scm-shipment-step.active .scm-shipment-step-label {
+  color: var(--color-text-primary);
+  font-weight: 500;
+}
+
+.scm-shipment-details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.scm-shipment-detail {
+  background: var(--color-background-secondary);
+  border-radius: var(--scm-inner-radius);
+  padding: 10px 12px;
+}
+
+.scm-shipment-detail-label {
+  font-size: 11px;
+  color: var(--color-text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 3px;
+}
+
+.scm-shipment-detail-value {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+.scm-shipment-footer {
+  padding: 10px 16px;
+  border-top: 0.5px solid var(--color-border-tertiary);
+  background: var(--color-background-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.scm-shipment-carrier {
+  font-size: 12px;
+  color: var(--color-text-tertiary);
+}
+
+.scm-shipment-eta {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+
+/* ═══════════════════════════════════════════
+   6. INVENTORY TABLE — .scm-inventory
+   ═══════════════════════════════════════════ */
+.scm-inventory {
+  background: var(--color-background-primary);
+  border: 0.5px solid var(--color-border-tertiary);
+  border-radius: var(--scm-card-radius);
+  overflow: hidden;
+  font-family: var(--forge-font-body);
+}
+
+.scm-inventory-header {
+  padding: 14px 16px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border-bottom: 0.5px solid var(--color-border-tertiary);
+}
+
+.scm-inventory-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+.scm-inventory-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.scm-inventory-table th {
+  text-align: left;
+  padding: 8px 16px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--color-text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: var(--color-background-secondary);
+  border-bottom: 0.5px solid var(--color-border-tertiary);
+}
+
+.scm-inventory-table td {
+  padding: 11px 16px;
+  border-bottom: 0.5px solid var(--color-border-tertiary);
+  color: var(--color-text-secondary);
+  vertical-align: middle;
+}
+
+.scm-inventory-table tr:last-child td {
+  border-bottom: none;
+}
+
+.scm-inventory-table tr:hover td {
+  background: var(--color-background-secondary);
+}
+
+.scm-inventory-sku {
+  font-family: var(--forge-font-mono);
+  font-size: 12px;
+  color: var(--color-text-tertiary);
+}
+
+.scm-inventory-name {
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+.scm-inventory-qty {
+  font-family: var(--forge-font-mono);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+.scm-inventory-qty.low {
+  color: var(--scm-color-overdue);
+}
+
+.scm-inventory-reorder {
+  font-family: var(--forge-font-mono);
+  font-size: 12px;
+  color: var(--color-text-tertiary);
+}
+
+.scm-inventory-footer {
+  padding: 10px 16px;
+  border-top: 0.5px solid var(--color-border-tertiary);
+  background: var(--color-background-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--color-text-tertiary);
+}
+
+
+/* ═══════════════════════════════════════════
+   7. APPROVAL FLOW — .scm-approval
+   ═══════════════════════════════════════════ */
+.scm-approval {
+  background: var(--color-background-primary);
+  border: 0.5px solid var(--color-border-tertiary);
+  border-radius: var(--scm-card-radius);
+  overflow: hidden;
+  font-family: var(--forge-font-body);
+}
+
+.scm-approval-header {
+  padding: 14px 16px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border-bottom: 0.5px solid var(--color-border-tertiary);
+}
+
+.scm-approval-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+.scm-approval-body { padding: 14px 16px; }
+
+.scm-approval-summary {
+  background: var(--color-background-secondary);
+  border-radius: var(--scm-inner-radius);
+  padding: 12px 14px;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.scm-approval-summary-label {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+}
+
+.scm-approval-summary-value {
+  font-family: var(--forge-font-mono);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+.scm-approval-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.scm-approval-step {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: var(--scm-inner-radius);
+  border: 0.5px solid var(--color-border-tertiary);
+}
+
+.scm-approval-step.step-done {
+  background: var(--scm-bg-approved);
+  border-color: var(--scm-color-approved);
+}
+
+.scm-approval-step.step-active {
+  background: var(--scm-bg-pending);
+  border-color: var(--scm-color-pending);
+}
+
+.scm-approval-step.step-pending {
+  background: var(--color-background-secondary);
+}
+
+.scm-approval-step-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  flex-shrink: 0;
+}
+
+.step-done .scm-approval-step-icon {
+  background: var(--scm-color-approved);
+  color: white;
+}
+
+.step-active .scm-approval-step-icon {
+  background: var(--scm-color-pending);
+  color: white;
+}
+
+.step-pending .scm-approval-step-icon {
+  background: var(--color-border-tertiary);
+  color: var(--color-text-tertiary);
+}
+
+.scm-approval-step-info { flex: 1; min-width: 0; }
+
+.scm-approval-step-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+.scm-approval-step-meta {
+  font-size: 11px;
+  color: var(--color-text-tertiary);
+  margin-top: 1px;
+}
+
+.scm-approval-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.scm-approval-actions .ui-btn-approve {
+  flex: 1;
+  background: var(--scm-bg-shipped);
+  color: color: #27500a;
+  border-color: var(--scm-color-shipped);
+}
+
+.scm-approval-actions .ui-btn-approve:hover {
+  background: var(--scm-color-shipped);
+  color: white;
+}
+
+.scm-approval-actions .ui-btn-reject {
+  flex: 1;
+  background: var(--scm-bg-cancelled);
+  color: color: #27500a;
+  border-color: var(--scm-color-cancelled);
+}
+
+.scm-approval-actions .ui-btn-reject:hover {
+  background: var(--scm-color-cancelled);
+  color: var(--forge-offwhite);
+}
+
+
+/* ═══════════════════════════════════════════
+   8. SCM STAT BAR — .scm-stats
+   ═══════════════════════════════════════════ */
+.scm-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 10px;
+  margin-bottom: var(--forge-space-6);
+}
+
+.scm-stat {
+  background: var(--color-background-primary);
+  border: 0.5px solid var(--color-border-tertiary);
+  border-radius: var(--scm-inner-radius);
+  padding: 14px 16px;
+}
+
+.scm-stat-label {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--color-text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 6px;
+}
+
+.scm-stat-value {
+  font-family: var(--forge-font-display);
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  letter-spacing: -0.02em;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.scm-stat-delta {
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.scm-stat-delta.up   { color: var(--scm-color-shipped); }
+.scm-stat-delta.down { color: var(--scm-color-cancelled); }
+.scm-stat-delta.flat { color: var(--color-text-tertiary); }
+
+
+/* ═══════════════════════════════════════════
+   9. SCM DASHBOARD LAYOUT
+   ═══════════════════════════════════════════ */
+.scm-dashboard {
+  padding: var(--forge-space-6);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.scm-dashboard-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: var(--forge-space-6);
+  flex-wrap: wrap;
+}
+
+.scm-dashboard-title {
+  font-family: var(--forge-font-display);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  letter-spacing: -0.02em;
+}
+
+.scm-dashboard-subtitle {
+  font-size: 13px;
+  color: var(--color-text-tertiary);
+  margin-top: 2px;
+}
+
+.scm-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.scm-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.scm-grid-full {
+  margin-bottom: 16px;
+}
+
+.scm-section-label {
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--color-text-tertiary);
+  margin-bottom: var(--forge-space-3);
+}
+
+
+/* ═══════════════════════════════════════════
+   10. MOBILE RESPONSIVE
+   ═══════════════════════════════════════════ */
+@media (max-width: 768px) {
+  .scm-dashboard {
+    padding: var(--forge-space-4);
+  }
+
+  .scm-grid-2,
+  .scm-grid-3 {
+    grid-template-columns: 1fr;
+  }
+
+  .scm-shipment-steps {
+    gap: 4px;
+  }
+
+  .scm-shipment-step-label {
+    font-size: 10px;
+    max-width: 48px;
+  }
+
+  .scm-inventory-table th:nth-child(3),
+  .scm-inventory-table td:nth-child(3) {
+    display: none;
+  }
+
+  .scm-approval-actions {
+    flex-direction: column;
+  }
+
+  .scm-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
