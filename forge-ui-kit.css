@@ -1252,6 +1252,15 @@ body {
   .forge-container-sm {
     padding: 0 var(--forge-space-4);
   }
+   .module-card-top {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .module-price {
+    font-size: 10px;
+  }
 }
 
 /* ----------------------------------------------------
