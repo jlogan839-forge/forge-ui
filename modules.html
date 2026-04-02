@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modules — Forge UI Kit</title>
+  <meta name="description" content="Domain-specific UI modules for supply chain, finance, CRM, HR and more — built on the Forge Core Kit, free forever.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,700;1,400;1,700&family=DM+Sans:wght@400;500&family=DM+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="forge-ui-kit.css">
+  <style>
+    body { background: var(--forge-offwhite); }
+
+    .modules-hero {
+      padding: var(--forge-space-12) 0 var(--forge-space-10);
+    }
+
+    .modules-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--forge-font-body);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--forge-glow);
+      margin-bottom: var(--forge-space-6);
+    }
+
+    .modules-eyebrow::before {
+      content: '';
+      display: inline-block;
+      width: 24px;
+      height: 1.5px;
+      background: var(--forge-red);
+    }
+
+    .modules-headline {
+      font-family: var(--forge-font-display);
+      font-size: clamp(36px, 6vw, 68px);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.08;
+      color: var(--forge-offwhite);
+      margin-bottom: var(--forge-space-5);
+    }
+
+    .modules-headline em {
+      font-style: italic;
+      color: var(--forge-ember);
+    }
+
+    .modules-intro {
+      font-size: clamp(16px, 2vw, 19px);
+      line-height: 1.7;
+      color: var(--forge-chalk);
+      max-width: 580px;
+    }
+
+    .modules-body {
+      padding: var(--forge-space-12) 0;
+    }
+
+    .phase-block {
+      margin-bottom: var(--forge-space-12);
+    }
+
+    .phase-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: var(--forge-space-6);
+      padding-bottom: var(--forge-space-4);
+      border-bottom: 0.5px solid var(--color-border-tertiary);
+    }
+
+    .phase-pill {
+      font-family: var(--forge-font-mono);
+      font-size: 11px;
+      font-weight: 500;
+      padding: 3px 10px;
+      border-radius: var(--forge-radius-pill);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .phase-pill-done    { background: var(--color-background-success); color: var(--color-text-success); }
+    .phase-pill-next    { background: var(--color-background-info);    color: var(--color-text-info); }
+    .phase-pill-planned { background: var(--color-background-secondary); color: var(--color-text-tertiary); border: 0.5px solid var(--color-border-tertiary); }
+
+    .phase-title {
+      font-family: var(--forge-font-body);
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--color-text-primary);
+    }
+
+    .phase-sub {
+      font-family: var(--forge-font-mono);
+      font-size: 11px;
+      color: var(--color-text-tertiary);
+      margin-left: auto;
+    }
+
+    .modules-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 14px;
+    }
+
+    .module-card {
+      background: var(--color-background-primary);
+      border: 0.5px solid var(--color-border-tertiary);
+      border-radius: var(--forge-radius-lg);
+      padding: var(--forge-space-5);
+      transition: border-color var(--forge-transition);
+    }
+
+    .module-card:hover { border-color: var(--color-border-secondary); }
+
+    .module-card-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .module-name {
+      font-family: var(--forge-font-body);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--color-text-primary);
+    }
+
+    .module-price {
+      font-family: var(--forge-font-mono);
+      font-size: 11px;
+      font-weight: 500;
+      padding: 2px 8px;
+      border-radius: var(--forge-radius-pill);
+      white-space: nowrap;
+      background: var(--color-background-danger);
+      color: var(--color-text-danger);
+      flex-shrink: 0;
+    }
+
+    .module-desc {
+      font-size: 13px;
+      color: var(--color-text-secondary);
+      line-height: 1.6;
+      margin-bottom: var(--forge-space-4);
+    }
+
+    .module-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .module-components {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+
+    .module-comp {
+      font-family: var(--forge-font-mono);
+      font-size: 11px;
+      background: var(--color-background-secondary);
+      color: var(--color-text-tertiary);
+      border-radius: 4px;
+      padding: 2px 6px;
+    }
+
+    .module-free {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--color-text-success);
+      background: var(--color-background-success);
+      padding: 2px 8px;
+      border-radius: var(--forge-radius-pill);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .architecture-block {
+      background: var(--forge-black);
+      border-radius: var(--forge-radius-xl);
+      padding: var(--forge-space-8);
+      margin-bottom: var(--forge-space-12);
+    }
+
+    .arch-title {
+      font-family: var(--forge-font-display);
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--forge-offwhite);
+      margin-bottom: var(--forge-space-2);
+      letter-spacing: -0.02em;
+    }
+
+    .arch-sub {
+      font-size: 13px;
+      color: var(--forge-stone);
+      margin-bottom: var(--forge-space-6);
+      line-height: 1.6;
+    }
+
+    .arch-layers {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .arch-layer {
+      border-radius: var(--forge-radius-md);
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .arch-layer-core {
+      background: var(--forge-red);
+    }
+
+    .arch-layer-module {
+      background: var(--forge-charcoal);
+      border: 0.5px solid rgba(245,243,238,0.1);
+    }
+
+    .arch-layer-label {
+      font-family: var(--forge-font-body);
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .arch-layer-core .arch-layer-label { color: var(--forge-offwhite); }
+    .arch-layer-module .arch-layer-label { color: var(--forge-chalk); }
+
+    .arch-layer-desc {
+      font-size: 12px;
+      margin-top: 2px;
+    }
+
+    .arch-layer-core .arch-layer-desc { color: rgba(245,243,238,0.7); }
+    .arch-layer-module .arch-layer-desc { color: var(--forge-stone); }
+
+    .arch-layer-tag {
+      font-family: var(--forge-font-mono);
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: var(--forge-radius-pill);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .arch-layer-core .arch-layer-tag {
+      background: rgba(245,243,238,0.2);
+      color: var(--forge-offwhite);
+    }
+
+    .arch-layer-module .arch-layer-tag {
+      background: rgba(245,243,238,0.08);
+      color: var(--forge-stone);
+    }
+
+    .contribute-block {
+      background: var(--color-background-primary);
+      border: 0.5px solid var(--color-border-tertiary);
+      border-radius: var(--forge-radius-xl);
+      padding: var(--forge-space-8);
+      text-align: center;
+      margin-bottom: var(--forge-space-12);
+    }
+
+    .contribute-title {
+      font-family: var(--forge-font-display);
+      font-size: clamp(22px, 3vw, 30px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--color-text-primary);
+      margin-bottom: var(--forge-space-3);
+    }
+
+    .contribute-title em {
+      font-style: italic;
+      color: var(--forge-red);
+    }
+
+    .contribute-desc {
+      font-size: 15px;
+      color: var(--color-text-secondary);
+      line-height: 1.7;
+      max-width: 520px;
+      margin: 0 auto var(--forge-space-6);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAV ── -->
+  <header>
+    <nav class="forge-nav" aria-label="Main navigation">
+      <a href="index.html" class="forge-nav-logo" aria-label="Forge home">
+        <svg width="28" height="28" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+          <rect width="64" height="64" rx="10" fill="#1a1917"/>
+          <path d="M14 50 L14 18 L32 18 L32 26 L22 26 L22 33 L30 33 L30 41 L22 41 L22 50 Z" fill="#f5f3ee"/>
+          <rect x="34" y="18" width="10" height="8" rx="1" fill="#c8410a"/>
+        </svg>
+        Forge
+      </a>
+
+      <ul class="forge-nav-links" role="list">
+        <li><a href="docs.html">Docs</a></li>
+        <li><a href="modules.html" class="active" aria-current="page">Modules</a></li>
+        <li><a href="manifesto.html">Manifesto</a></li>
+      </ul>
+
+      <div style="display:flex;align-items:center;gap:8px">
+        <a href="https://github.com/jlogan839-forge/forge-ui"
+           class="ui-btn ui-btn-sm ui-btn-ghost"
+           target="_blank" rel="noopener noreferrer"
+           aria-label="View Forge on GitHub">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+            <path d="M7 0.5C3.41 0.5 0.5 3.41 0.5 7c0 2.87 1.86 5.3 4.44 6.16.32.06.44-.14.44-.31v-1.09c-1.8.39-2.18-.87-2.18-.87-.3-.75-.72-.95-.72-.95-.59-.4.04-.4.04-.4.65.05 1 .67 1 .67.58 1 1.53.71 1.9.54.06-.42.23-.71.41-.87-1.44-.16-2.95-.72-2.95-3.2 0-.71.25-1.28.67-1.74-.07-.16-.29-.82.06-1.71 0 0 .55-.18 1.8.67A6.3 6.3 0 017 3.87c.56 0 1.12.08 1.64.23 1.25-.85 1.8-.67 1.8-.67.35.89.13 1.55.06 1.71.42.46.67 1.03.67 1.74 0 2.49-1.52 3.04-2.96 3.2.23.2.44.6.44 1.2v1.79c0 .17.11.38.44.31A6.5 6.5 0 0013.5 7c0-3.59-2.91-6.5-6.5-6.5z" fill="currentColor"/>
+          </svg>
+          GitHub
+        </a>
+        <a href="docs.html" class="ui-btn ui-btn-sm ui-btn-accent">Get started</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- ── HERO ── -->
+    <section class="modules-hero forge-surface-dark" aria-labelledby="modules-title">
+      <div class="forge-container-sm">
+        <div class="modules-eyebrow">Modules</div>
+        <h1 class="modules-headline" id="modules-title">
+          One kit.<br>
+          Every part of<br>
+          your <em>business.</em>
+        </h1>
+        <p class="modules-intro">
+          The Core Kit is the foundation. Domain modules build on top of it —
+          same tokens, same patterns, same accessibility standards.
+          Supply chain, finance, CRM, HR, and more. All free, forever.
+        </p>
+      </div>
+    </section>
+
+    <!-- ── BODY ── -->
+    <div class="modules-body forge-surface-light">
+      <div class="forge-container">
+
+        <!-- Architecture -->
+        <div class="architecture-block" role="region" aria-label="Module architecture">
+          <div class="arch-title">How modules work</div>
+          <div class="arch-sub">
+            Every module inherits the Core Kit's token system. Override one variable at the
+            root level and every component across every module updates automatically.
+          </div>
+          <div class="arch-layers" role="list" aria-label="Architecture layers">
+            <div class="arch-layer arch-layer-module" role="listitem">
+              <div>
+                <div class="arch-layer-label">Your application</div>
+                <div class="arch-layer-desc">Django, Rails, Laravel, Spring, plain HTML — anything</div>
+              </div>
+              <span class="arch-layer-tag">Your backend</span>
+            </div>
+            <div class="arch-layer arch-layer-module" role="listitem">
+              <div>
+                <div class="arch-layer-label">Domain modules</div>
+                <div class="arch-layer-desc">ui-scm-*, ui-fin-*, ui-crm-*, ui-hr-* — built on Core Kit components</div>
+              </div>
+              <span class="arch-layer-tag">Coming soon</span>
+            </div>
+            <div class="arch-layer arch-layer-core" role="listitem">
+              <div>
+                <div class="arch-layer-label">Forge Core Kit</div>
+                <div class="arch-layer-desc">Buttons, inputs, cards, modals, badges, alerts — the foundation everything builds on</div>
+              </div>
+              <span class="arch-layer-tag">Available now</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Phase 0 — Core Kit -->
+        <div class="phase-block">
+          <div class="phase-header">
+            <span class="phase-pill phase-pill-done">Phase 0</span>
+            <span class="phase-title">Core UI Kit — the foundation</span>
+            <span class="phase-sub">Available now</span>
+          </div>
+          <div class="modules-grid">
+            <div class="module-card">
+              <div class="module-card-top">
+                <div class="module-name">Core UI Kit</div>
+              </div>
+              <div class="module-desc">
+                Buttons, inputs, selects, textareas, toggles, checkboxes, badges,
+                alerts, cards, and modals. Full token system. WCAG 2.1 AA.
+                Zero dependencies. Works with any backend.
+              </div>
+              <div class="module-footer">
+                <div class="module-components">
+                  <span class="module-comp">forge-ui-kit.css</span>
+                  <span class="module-comp">forge-ui-kit.js</span>
+                </div>
+                <span class="module-free">Free now</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Phase 1 — The wedge -->
+        <div class="phase-block">
+          <div class="phase-header">
+            <span class="phase-pill phase-pill-next">Phase 1</span>
+            <span class="phase-title">Enterprise operations — the wedge</span>
+            <span class="phase-sub">Building next</span>
+          </div>
+          <div class="modules-grid">
+
+            <div class="module-card">
+              <div class="module-card-top">
+                <div class="module-name">SCM — Supply chain</div>
+                <span class="module-price">Vendors charge $300–600/user/mo</span>
+              </div>
+              <div class="module-desc">
+                Purchase orders, supplier cards, shipment trackers, inventory tables,
+                RFQ workflows, and approval chains. Everything a small distributor
+                or manufacturer needs to manage their supply chain.
+              </div>
+              <div class="module-footer">
+                <div class="module-components">
+                  <span class="module-comp">ui-scm-*</span>
+                  <span class="module-comp">PO flow</span>
+                  <span class="module-comp">Suppliers</span>
+                </div>
+                <span class="module-free">Free</span>
+              </div>
+            </div>
+
+            <div class="module-card">
+              <div class="module-card-top">
+                <div class="module-name">Finance — ERP front-end</div>
+                <span class="module-price">Vendors charge $400–900/user/mo</span>
+              </div>
+              <div class="module-desc">
+                Invoice tables, approval workflows, GL entry forms, budget vs actual
+                charts, and payment status dashboards. The UI layer for financial
+                operations without the enterprise price tag.
+              </div>
+              <div class="module-footer">
+                <div class="module-components">
+                  <span class="module-comp">ui-fin-*</span>
+                  <span class="module-comp">Invoices</span>
+                  <span class="module-comp">Budgets</span>
+                </div>
+                <span class="module-free">Free</span>
+              </div>
+            </div>
+
+            <div class="module-card">
+              <div class="module-card-top">
+                <div class="module-name">CRM — Customer relations</div>
+                <span class="module-price">Vendors charge $65–300/user/mo</span>
+              </div>
+              <div class="module-desc">
+                Contact cards, pipeline Kanban boards, activity timelines,
+                deal stage tracking, and email thread views. Built for
+                the businesses that can't justify a Salesforce contract.
+              </div>
+              <div class="module-footer">
+                <div class="module-components">
+                  <span class="module-comp">ui-crm-*</span>
+                  <span class="module-comp">Pipeline</span>
+                  <span class="module-comp">Contacts</span>
+                </div>
+                <span class="module-free">Free</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Phase 2 -->
+        <div class="phase-block">
+          <div class="phase-header">
+            <span class="phase-pill phase-pill-planned">Phase 2</span>
+            <span class="phase-title">HR & workforce</span>
+            <span class="phase-sub">Mid-term</span>
+          </div>
+          <div class="modules-grid">
+
+            <div class="module-card">
+              <div class="module-card-top">
+                <div class="module-name">HR — Human capital</div>
+                <span class="module-price">Vendors charge $15–25/employee/mo</span>
+              </div>
+              <div class="module-desc">
+                Employee profiles, org chart viewer, leave request forms,
+                onboarding checklists, and headcount dashboards. HR tooling
+                that doesn't require an implementation consultant.
+              </div>
+              <div class="module-footer">
+                <div class="module-components">
+                  <span class="module-comp">ui-hr-*</span>
+                  <span class="module-comp">Org chart</span>
+                  <span class="module-comp">Leave flow</span>
+                </div>
+                <span class="module-free">Free</span>
+              </div>
+            </div>
+
+            <div class="module-card">
+              <div class="module-card-top">
+                <div class="module-name">Projects — Portfolio mgmt</div>
+                <span class="module-price">Vendors charge $100–250/user/mo</span>
+              </div>
+              <div class="module-desc">
+                Gantt views, milestone trackers, resource allocation tables,
+                project status rollups, and risk registers. For the businesses
+                managing real work without enterprise PPM software.
+              </div>
+              <div class="module-footer">
+                <div class="module-components">
+                  <span class="module-comp">ui-prj-*</span>
+                  <span class="module-comp">Gantt</span>
+                  <span class="module-comp">Milestones</span>
+                </div>
+                <span class="module-free">Free</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Phase 3 -->
+        <div class="phase-block">
+          <div class="phase-header">
+            <span class="phase-pill phase-pill-planned">Phase 3</span>
+            <span class="phase-title">Analytics & manufacturing</span>
+            <span class="phase-sub">Long-term</span>
+          </div>
+          <div class="modules-grid">
+
+            <div class="module-card">
+              <div class="module-card-top">
+                <div class="module-name">Analytics — BI front-end</div>
+                <span class="module-price">Vendors charge $16–140/user/mo</span>
+              </div>
+              <div class="module-desc">
+                KPI dashboards, data table components, chart wrappers,
+                drill-down panels, export controls, and scheduled report UI.
+                Business intelligence without the business intelligence budget.
+              </div>
+              <div class="module-footer">
+                <div class="module-components">
+                  <span class="module-comp">ui-bi-*</span>
+                  <span class="module-comp">KPI cards</span>
+                  <span class="module-comp">Charts</span>
+                </div>
+                <span class="module-free">Free</span>
+              </div>
+            </div>
+
+            <div class="module-card">
+              <div class="module-card-top">
+                <div class="module-name">Manufacturing — MES front-end</div>
+                <span class="module-price">Vendors charge $500k+ to implement</span>
+              </div>
+              <div class="module-desc">
+                Work order dashboards, production line status boards, quality
+                inspection forms, downtime trackers, and shift handover views.
+                For manufacturers who deserve better software than a spreadsheet.
+              </div>
+              <div class="module-footer">
+                <div class="module-components">
+                  <span class="module-comp">ui-mfg-*</span>
+                  <span class="module-comp">Work orders</span>
+                  <span class="module-comp">Line status</span>
+                </div>
+                <span class="module-free">Free</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Contribute -->
+        <div class="contribute-block" role="complementary" aria-label="Contribute to Forge">
+          <h2 class="contribute-title">
+            Want to build a <em>module?</em>
+          </h2>
+          <p class="contribute-desc">
+            Every module on this roadmap is an open invitation.
+            If you work in supply chain, finance, HR, or manufacturing
+            and know what good tooling should look like — we want to build it with you.
+          </p>
+          <div style="display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap">
+            <a href="https://github.com/jlogan839-forge/forge-ui/discussions"
+               class="ui-btn ui-btn-accent"
+               target="_blank" rel="noopener noreferrer">
+              Start a discussion
+            </a>
+            <a href="https://github.com/jlogan839-forge/forge-ui"
+               class="ui-btn"
+               target="_blank" rel="noopener noreferrer">
+              View on GitHub
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ── FOOTER ── -->
+  <footer class="forge-surface-light">
+    <div class="forge-container">
+      <div class="forge-footer">
+        <span>Forge UI Kit · MIT License · Free forever</span>
+        <nav aria-label="Footer links" style="display:flex;gap:16px">
+          <a href="docs.html"      style="color:inherit;text-decoration:none">Docs</a>
+          <a href="modules.html"   style="color:inherit;text-decoration:none">Modules</a>
+          <a href="manifesto.html" style="color:inherit;text-decoration:none">Manifesto</a>
+          <a href="https://github.com/jlogan839-forge/forge-ui"
+             style="color:inherit;text-decoration:none"
+             target="_blank" rel="noopener noreferrer">GitHub</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <script src="forge-ui-kit.js"></script>
+</body>
+</html>

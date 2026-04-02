@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Docs — Forge UI Kit</title>
+  <meta name="description" content="Full documentation for Forge UI Kit — coming soon. In the meantime, everything you need is in the README.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,700;1,400;1,700&family=DM+Sans:wght@400;500&family=DM+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="forge-ui-kit.css">
+  <style>
+    body { background: var(--forge-offwhite); }
+
+    .docs-hero {
+      min-height: calc(100vh - 56px);
+      display: flex;
+      align-items: center;
+      padding: var(--forge-space-12) 0;
+    }
+
+    .docs-inner {
+      max-width: 560px;
+    }
+
+    .docs-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--forge-font-body);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--forge-glow);
+      margin-bottom: var(--forge-space-6);
+    }
+
+    .docs-eyebrow::before {
+      content: '';
+      display: inline-block;
+      width: 24px;
+      height: 1.5px;
+      background: var(--forge-red);
+    }
+
+    .docs-headline {
+      font-family: var(--forge-font-display);
+      font-size: clamp(36px, 6vw, 64px);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.08;
+      color: var(--forge-offwhite);
+      margin-bottom: var(--forge-space-5);
+    }
+
+    .docs-headline em {
+      font-style: italic;
+      color: var(--forge-ember);
+    }
+
+    .docs-sub {
+      font-size: clamp(15px, 2vw, 18px);
+      line-height: 1.7;
+      color: var(--forge-chalk);
+      margin-bottom: var(--forge-space-8);
+    }
+
+    .docs-links {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: var(--forge-space-8);
+    }
+
+    .docs-link-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 14px 16px;
+      background: rgba(245,243,238,0.06);
+      border: 0.5px solid rgba(245,243,238,0.12);
+      border-radius: var(--forge-radius-md);
+      text-decoration: none;
+      transition: background var(--forge-transition), border-color var(--forge-transition);
+    }
+
+    .docs-link-card:hover {
+      background: rgba(245,243,238,0.1);
+      border-color: rgba(245,243,238,0.2);
+    }
+
+    .docs-link-card:focus-visible {
+      outline: 2px solid var(--forge-red);
+      outline-offset: 2px;
+    }
+
+    .docs-link-label {
+      font-family: var(--forge-font-body);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--forge-offwhite);
+    }
+
+    .docs-link-desc {
+      font-size: 12px;
+      color: var(--forge-stone);
+      margin-top: 2px;
+    }
+
+    .docs-link-arrow {
+      color: var(--forge-stone);
+      flex-shrink: 0;
+      font-size: 16px;
+    }
+
+    .docs-progress {
+      border-top: 0.5px solid rgba(245,243,238,0.08);
+      padding-top: var(--forge-space-6);
+    }
+
+    .docs-progress-label {
+      font-family: var(--forge-font-mono);
+      font-size: 11px;
+      color: var(--forge-stone);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: var(--forge-space-4);
+    }
+
+    .docs-progress-items {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .docs-progress-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+    }
+
+    .docs-progress-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .dot-done    { background: var(--color-text-success); }
+    .dot-active  { background: var(--forge-red); }
+    .dot-pending { background: rgba(245,243,238,0.2); }
+
+    .docs-progress-item-label { color: var(--forge-chalk); }
+    .docs-progress-item-label.pending { color: var(--forge-stone); }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAV ── -->
+  <header>
+    <nav class="forge-nav" aria-label="Main navigation">
+      <a href="index.html" class="forge-nav-logo" aria-label="Forge home">
+        <svg width="28" height="28" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+          <rect width="64" height="64" rx="10" fill="#1a1917"/>
+          <path d="M14 50 L14 18 L32 18 L32 26 L22 26 L22 33 L30 33 L30 41 L22 41 L22 50 Z" fill="#f5f3ee"/>
+          <rect x="34" y="18" width="10" height="8" rx="1" fill="#c8410a"/>
+        </svg>
+        Forge
+      </a>
+
+      <ul class="forge-nav-links" role="list">
+        <li><a href="docs.html" class="active" aria-current="page">Docs</a></li>
+        <li><a href="modules.html">Modules</a></li>
+        <li><a href="manifesto.html">Manifesto</a></li>
+      </ul>
+
+      <div style="display:flex;align-items:center;gap:8px">
+        <a href="https://github.com/jlogan839-forge/forge-ui"
+           class="ui-btn ui-btn-sm ui-btn-ghost"
+           target="_blank" rel="noopener noreferrer"
+           aria-label="View Forge on GitHub">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+            <path d="M7 0.5C3.41 0.5 0.5 3.41 0.5 7c0 2.87 1.86 5.3 4.44 6.16.32.06.44-.14.44-.31v-1.09c-1.8.39-2.18-.87-2.18-.87-.3-.75-.72-.95-.72-.95-.59-.4.04-.4.04-.4.65.05 1 .67 1 .67.58 1 1.53.71 1.9.54.06-.42.23-.71.41-.87-1.44-.16-2.95-.72-2.95-3.2 0-.71.25-1.28.67-1.74-.07-.16-.29-.82.06-1.71 0 0 .55-.18 1.8.67A6.3 6.3 0 017 3.87c.56 0 1.12.08 1.64.23 1.25-.85 1.8-.67 1.8-.67.35.89.13 1.55.06 1.71.42.46.67 1.03.67 1.74 0 2.49-1.52 3.04-2.96 3.2.23.2.44.6.44 1.2v1.79c0 .17.11.38.44.31A6.5 6.5 0 0013.5 7c0-3.59-2.91-6.5-6.5-6.5z" fill="currentColor"/>
+          </svg>
+          GitHub
+        </a>
+        <a href="https://github.com/jlogan839-forge/forge-ui"
+           class="ui-btn ui-btn-sm ui-btn-accent"
+           target="_blank" rel="noopener noreferrer">
+          View on GitHub
+        </a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="docs-hero forge-surface-dark" aria-labelledby="docs-title">
+      <div class="forge-container">
+        <div class="docs-inner">
+
+          <div class="docs-eyebrow">Documentation</div>
+
+          <h1 class="docs-headline" id="docs-title">
+            Docs are<br>
+            <em>on the way.</em>
+          </h1>
+
+          <p class="docs-sub">
+            Full documentation is being written right now — installation guides,
+            component reference, token system, JS API, and framework-specific
+            examples. In the meantime everything you need is already available.
+          </p>
+
+          <!-- Quick links -->
+          <nav class="docs-links" aria-label="Available resources">
+
+            <a href="https://github.com/jlogan839-forge/forge-ui#readme"
+               class="docs-link-card"
+               target="_blank" rel="noopener noreferrer">
+              <div>
+                <div class="docs-link-label">README on GitHub</div>
+                <div class="docs-link-desc">Quick start, all components, JS API reference, theming guide</div>
+              </div>
+              <span class="docs-link-arrow" aria-hidden="true">→</span>
+            </a>
+
+            <a href="https://github.com/jlogan839-forge/forge-ui/releases"
+               class="docs-link-card"
+               target="_blank" rel="noopener noreferrer">
+              <div>
+                <div class="docs-link-label">Download v1.0.0</div>
+                <div class="docs-link-desc">forge-ui-kit.css and forge-ui-kit.js — two files, ready to use</div>
+              </div>
+              <span class="docs-link-arrow" aria-hidden="true">→</span>
+            </a>
+
+            <a href="https://github.com/jlogan839-forge/forge-ui/discussions"
+               class="docs-link-card"
+               target="_blank" rel="noopener noreferrer">
+              <div>
+                <div class="docs-link-label">GitHub Discussions</div>
+                <div class="docs-link-desc">Ask questions, suggest components, discuss the roadmap</div>
+              </div>
+              <span class="docs-link-arrow" aria-hidden="true">→</span>
+            </a>
+
+            <a href="https://github.com/jlogan839-forge/forge-ui/issues"
+               class="docs-link-card"
+               target="_blank" rel="noopener noreferrer">
+              <div>
+                <div class="docs-link-label">Report an issue</div>
+                <div class="docs-link-desc">Found a bug or accessibility problem? Let us know</div>
+              </div>
+              <span class="docs-link-arrow" aria-hidden="true">→</span>
+            </a>
+
+          </nav>
+
+          <!-- Progress -->
+          <div class="docs-progress" role="region" aria-label="Documentation progress">
+            <div class="docs-progress-label">What's being written</div>
+            <div class="docs-progress-items" role="list">
+              <div class="docs-progress-item" role="listitem">
+                <div class="docs-progress-dot dot-done" aria-hidden="true"></div>
+                <span class="docs-progress-item-label">Quick start guide</span>
+              </div>
+              <div class="docs-progress-item" role="listitem">
+                <div class="docs-progress-dot dot-done" aria-hidden="true"></div>
+                <span class="docs-progress-item-label">Component reference — buttons, inputs, cards</span>
+              </div>
+              <div class="docs-progress-item" role="listitem">
+                <div class="docs-progress-dot dot-active" aria-hidden="true"></div>
+                <span class="docs-progress-item-label">Token system and theming guide</span>
+              </div>
+              <div class="docs-progress-item" role="listitem">
+                <div class="docs-progress-dot dot-active" aria-hidden="true"></div>
+                <span class="docs-progress-item-label">JavaScript API reference</span>
+              </div>
+              <div class="docs-progress-item" role="listitem">
+                <div class="docs-progress-dot dot-pending" aria-hidden="true"></div>
+                <span class="docs-progress-item-label pending">Framework guides — Django, Rails, Laravel</span>
+              </div>
+              <div class="docs-progress-item" role="listitem">
+                <div class="docs-progress-dot dot-pending" aria-hidden="true"></div>
+                <span class="docs-progress-item-label pending">Accessibility patterns and ARIA reference</span>
+              </div>
+              <div class="docs-progress-item" role="listitem">
+                <div class="docs-progress-dot dot-pending" aria-hidden="true"></div>
+                <span class="docs-progress-item-label pending">Contributing guide for module builders</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ── FOOTER ── -->
+  <footer class="forge-surface-light">
+    <div class="forge-container">
+      <div class="forge-footer">
+        <span>Forge UI Kit · MIT License · Free forever</span>
+        <nav aria-label="Footer links" style="display:flex;gap:16px">
+          <a href="docs.html"      style="color:inherit;text-decoration:none">Docs</a>
+          <a href="modules.html"   style="color:inherit;text-decoration:none">Modules</a>
+          <a href="manifesto.html" style="color:inherit;text-decoration:none">Manifesto</a>
+          <a href="https://github.com/jlogan839-forge/forge-ui"
+             style="color:inherit;text-decoration:none"
+             target="_blank" rel="noopener noreferrer">GitHub</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <script src="forge-ui-kit.js"></script>
+</body>
+</html>
