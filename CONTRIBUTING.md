@@ -48,7 +48,8 @@ code .
 open index.html
 ```
 
-No npm install. No webpack. No compilation. Open the file, make a change, refresh the browser.
+No build step. No compilation. Open the file, make a change, refresh the browser. 
+Forge is on npm for easy installation, but development requires nothing more than a browser.
 
 ---
 
