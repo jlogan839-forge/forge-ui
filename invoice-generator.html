@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Invoice Generator — Built with Forge UI</title>
+  <meta name="description" content="Free invoice generator for small businesses. Built with Forge UI Kit — no account required.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,700;1,400&family=DM+Sans:wght@400;500&family=DM+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="forge-ui-kit.css">
+  <style>
+    body {
+      background: var(--forge-offwhite);
+      margin: 0;
+      font-family: var(--forge-font-body);
+    }
+
+    /* ── TOP BAR ── */
+    .app-topbar {
+      background: var(--forge-black);
+      padding: 0 24px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      border-bottom: 0.5px solid rgba(245,243,238,0.08);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .app-topbar-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .app-topbar-name {
+      font-family: var(--forge-font-display);
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--forge-offwhite);
+      letter-spacing: -0.02em;
+    }
+
+    .app-topbar-sep {
+      color: rgba(245,243,238,0.2);
+      font-size: 14px;
+    }
+
+    .app-topbar-title {
+      font-size: 13px;
+      color: var(--forge-stone);
+    }
+
+    /* ── LAYOUT ── */
+    .app-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      min-height: calc(100vh - 48px);
+    }
+
+    .app-form-panel {
+      padding: 24px;
+      overflow-y: auto;
+      border-right: 0.5px solid var(--color-border-tertiary);
+      background: var(--color-background-primary);
+    }
+
+    .app-preview-panel {
+      padding: 24px;
+      background: var(--color-background-secondary);
+      overflow-y: auto;
+    }
+
+    /* ── FORM SECTIONS ── */
+    .form-section {
+      margin-bottom: 28px;
+    }
+
+    .form-section-title {
+      font-size: 11px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--color-text-tertiary);
+      margin-bottom: 14px;
+      padding-bottom: 8px;
+      border-bottom: 0.5px solid var(--color-border-tertiary);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .form-row-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .form-full {
+      margin-bottom: 12px;
+    }
+
+    /* ── LINE ITEMS ── */
+    .line-items-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 12px;
+    }
+
+    .line-items-table th {
+      text-align: left;
+      font-size: 11px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--color-text-tertiary);
+      padding: 0 8px 8px 0;
+    }
+
+    .line-items-table th:last-child { width: 32px; }
+    .line-items-table th:nth-child(1) { width: auto; }
+    .line-items-table th:nth-child(2) { width: 80px; }
+    .line-items-table th:nth-child(3) { width: 100px; }
+    .line-items-table th:nth-child(4) { width: 100px; text-align: right; }
+
+    .line-item-row td {
+      padding: 4px 8px 4px 0;
+      vertical-align: middle;
+    }
+
+    .line-item-row td:last-child { padding-right: 0; }
+
+    .line-item-total {
+      font-family: var(--forge-font-mono);
+      font-size: 13px;
+      color: var(--color-text-primary);
+      font-weight: 500;
+      text-align: right;
+      white-space: nowrap;
+      padding-top: 8px;
+    }
+
+    .remove-line-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--color-text-tertiary);
+      padding: 4px;
+      border-radius: 4px;
+      font-size: 14px;
+      line-height: 1;
+      transition: color var(--forge-transition);
+    }
+
+    .remove-line-btn:hover { color: var(--color-text-danger); }
+    .remove-line-btn:focus-visible { outline: 2px solid var(--forge-red); outline-offset: 2px; }
+
+    /* ── TOTALS ── */
+    .totals-section {
+      background: var(--color-background-secondary);
+      border-radius: var(--forge-radius-md);
+      padding: 14px 16px;
+      margin-top: 16px;
+    }
+
+    .total-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      padding: 4px 0;
+    }
+
+    .total-row-label { color: var(--color-text-secondary); }
+
+    .total-row-value {
+      font-family: var(--forge-font-mono);
+      font-weight: 500;
+      color: var(--color-text-primary);
+    }
+
+    .total-row-grand {
+      border-top: 0.5px solid var(--color-border-secondary);
+      margin-top: 6px;
+      padding-top: 10px;
+      font-size: 15px;
+      font-weight: 500;
+    }
+
+    .total-row-grand .total-row-label { color: var(--color-text-primary); }
+
+    /* ── INVOICE PREVIEW ── */
+    .invoice-preview {
+      background: white;
+      border-radius: var(--forge-radius-lg);
+      border: 0.5px solid var(--color-border-tertiary);
+      padding: 40px 48px;
+      min-height: 700px;
+      box-shadow: 0 2px 16px rgba(26,25,23,0.06);
+      font-family: var(--forge-font-body);
+      color: #1a1917;
+    }
+
+    .inv-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 40px;
+    }
+
+    .inv-brand-name {
+      font-family: var(--forge-font-display);
+      font-size: 24px;
+      font-weight: 700;
+      color: #1a1917;
+      letter-spacing: -0.02em;
+      margin-bottom: 4px;
+    }
+
+    .inv-brand-address {
+      font-size: 12px;
+      color: #787470;
+      line-height: 1.6;
+    }
+
+    .inv-meta {
+      text-align: right;
+    }
+
+    .inv-title {
+      font-family: var(--forge-font-display);
+      font-size: 32px;
+      font-weight: 700;
+      color: #c8410a;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+
+    .inv-number {
+      font-family: var(--forge-font-mono);
+      font-size: 12px;
+      color: #787470;
+    }
+
+    .inv-dates {
+      margin-top: 6px;
+    }
+
+    .inv-date-row {
+      display: flex;
+      gap: 8px;
+      font-size: 12px;
+      justify-content: flex-end;
+    }
+
+    .inv-date-label { color: #787470; }
+    .inv-date-value { color: #1a1917; font-weight: 500; }
+
+    .inv-divider {
+      border: none;
+      border-top: 1px solid #e2dfd9;
+      margin: 24px 0;
+    }
+
+    .inv-parties {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      margin-bottom: 32px;
+    }
+
+    .inv-party-label {
+      font-size: 10px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #787470;
+      margin-bottom: 6px;
+    }
+
+    .inv-party-name {
+      font-size: 14px;
+      font-weight: 500;
+      color: #1a1917;
+      margin-bottom: 2px;
+    }
+
+    .inv-party-address {
+      font-size: 12px;
+      color: #787470;
+      line-height: 1.6;
+    }
+
+    .inv-items-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 24px;
+    }
+
+    .inv-items-table th {
+      text-align: left;
+      font-size: 11px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #787470;
+      padding: 8px 0;
+      border-bottom: 1px solid #e2dfd9;
+    }
+
+    .inv-items-table th:nth-child(2),
+    .inv-items-table th:nth-child(3),
+    .inv-items-table th:nth-child(4) { text-align: right; }
+
+    .inv-items-table td {
+      padding: 10px 0;
+      border-bottom: 0.5px solid #f1efe8;
+      font-size: 13px;
+      color: #4a4844;
+      vertical-align: top;
+    }
+
+    .inv-items-table td:nth-child(2),
+    .inv-items-table td:nth-child(3),
+    .inv-items-table td:nth-child(4) { text-align: right; }
+
+    .inv-items-table td:nth-child(4) {
+      font-family: var(--forge-font-mono);
+      font-weight: 500;
+      color: #1a1917;
+    }
+
+    .inv-item-desc { font-size: 11px; color: #b8b5b0; margin-top: 2px; }
+
+    .inv-totals {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .inv-totals-inner {
+      width: 220px;
+    }
+
+    .inv-total-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      padding: 4px 0;
+      color: #787470;
+    }
+
+    .inv-total-row-value {
+      font-family: var(--forge-font-mono);
+      color: #1a1917;
+    }
+
+    .inv-total-grand {
+      border-top: 1.5px solid #1a1917;
+      margin-top: 6px;
+      padding-top: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #1a1917;
+    }
+
+    .inv-total-grand .inv-total-row-value {
+      font-size: 16px;
+      font-weight: 700;
+      color: #c8410a;
+    }
+
+    .inv-footer {
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 0.5px solid #e2dfd9;
+    }
+
+    .inv-notes-label {
+      font-size: 10px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #b8b5b0;
+      margin-bottom: 4px;
+    }
+
+    .inv-notes-text {
+      font-size: 12px;
+      color: #787470;
+      line-height: 1.6;
+    }
+
+    .inv-payment {
+      margin-top: 16px;
+      background: #fef0e8;
+      border-radius: 8px;
+      padding: 12px 14px;
+      font-size: 12px;
+      color: #7a1e05;
+    }
+
+    .inv-payment-label {
+      font-weight: 500;
+      margin-bottom: 2px;
+    }
+
+    /* ── PREVIEW ACTIONS ── */
+    .preview-actions {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+      justify-content: flex-end;
+    }
+
+    /* ── BUILT WITH BADGE ── */
+    .built-with {
+      text-align: center;
+      margin-top: 16px;
+      font-size: 11px;
+      color: var(--color-text-tertiary);
+    }
+
+    .built-with a {
+      color: var(--forge-red);
+      text-decoration: none;
+    }
+
+    /* ── PRINT STYLES ── */
+    @media print {
+      .app-topbar,
+      .app-form-panel,
+      .preview-actions,
+      .built-with { display: none !important; }
+
+      .app-layout { display: block; }
+      .app-preview-panel { padding: 0; background: white; }
+      .invoice-preview {
+        border: none;
+        box-shadow: none;
+        border-radius: 0;
+        padding: 32px;
+      }
+    }
+
+    /* ── MOBILE ── */
+    @media (max-width: 900px) {
+      .app-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .app-form-panel {
+        border-right: none;
+        border-bottom: 0.5px solid var(--color-border-tertiary);
+      }
+
+      .form-row, .form-row-3 {
+        grid-template-columns: 1fr;
+      }
+
+      .invoice-preview {
+        padding: 24px;
+      }
+
+      .inv-header {
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .inv-meta { text-align: left; }
+      .inv-date-row { justify-content: flex-start; }
+
+      .inv-parties {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top bar -->
+  <div class="app-topbar" role="banner">
+    <a href="index.html" class="app-topbar-brand" aria-label="Forge UI home">
+      <svg width="22" height="22" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+        <rect width="64" height="64" rx="10" fill="#c8410a"/>
+        <path d="M14 50 L14 18 L32 18 L32 26 L22 26 L22 33 L30 33 L30 41 L22 41 L22 50 Z" fill="#f5f3ee"/>
+        <rect x="34" y="18" width="10" height="8" rx="1" fill="#f5f3ee" opacity="0.8"/>
+      </svg>
+      <span class="app-topbar-name">Forge UI</span>
+    </a>
+    <span class="app-topbar-sep">—</span>
+    <span class="app-topbar-title">Invoice Generator</span>
+    <div style="display:flex;gap:8px;margin-left:auto">
+      <a href="modules.html"
+         class="ui-btn ui-btn-sm ui-btn-ghost"
+         style="color:var(--forge-stone);border-color:rgba(245,243,238,0.15)">
+        Modules
+      </a>
+      <a href="https://github.com/jlogan839-forge/forge-ui"
+         class="ui-btn ui-btn-sm ui-btn-accent"
+         target="_blank" rel="noopener noreferrer">
+        GitHub
+      </a>
+    </div>
+  </div>
+
+  <div class="app-layout">
+
+    <!-- ── FORM PANEL ── -->
+    <div class="app-form-panel" role="main" aria-label="Invoice details form">
+
+      <!-- Your business -->
+      <div class="form-section">
+        <div class="form-section-title">Your business</div>
+        <div class="form-full">
+          <div class="ui-field">
+            <label class="ui-label" for="biz-name">Business name</label>
+            <input class="ui-input" id="biz-name" type="text"
+                   placeholder="Acme Co." autocomplete="organization"
+                   oninput="update()">
+          </div>
+        </div>
+        <div class="form-full">
+          <div class="ui-field">
+            <label class="ui-label" for="biz-address">Address</label>
+            <textarea class="ui-textarea" id="biz-address" rows="2"
+                      placeholder="123 Main St, Atlanta, GA 30301"
+                      style="min-height:60px;resize:none"
+                      oninput="update()"></textarea>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="ui-field">
+            <label class="ui-label" for="biz-email">Email</label>
+            <input class="ui-input" id="biz-email" type="email"
+                   placeholder="hello@acme.com" autocomplete="email"
+                   oninput="update()">
+          </div>
+          <div class="ui-field">
+            <label class="ui-label" for="biz-phone">Phone</label>
+            <input class="ui-input" id="biz-phone" type="tel"
+                   placeholder="(404) 555-0100" autocomplete="tel"
+                   oninput="update()">
+          </div>
+        </div>
+      </div>
+
+      <!-- Bill to -->
+      <div class="form-section">
+        <div class="form-section-title">Bill to</div>
+        <div class="form-full">
+          <div class="ui-field">
+            <label class="ui-label" for="client-name">Client name</label>
+            <input class="ui-input" id="client-name" type="text"
+                   placeholder="Client Company Inc." oninput="update()">
+          </div>
+        </div>
+        <div class="form-full">
+          <div class="ui-field">
+            <label class="ui-label" for="client-address">Address</label>
+            <textarea class="ui-textarea" id="client-address" rows="2"
+                      placeholder="456 Client Ave, New York, NY 10001"
+                      style="min-height:60px;resize:none"
+                      oninput="update()"></textarea>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="ui-field">
+            <label class="ui-label" for="client-email">Email</label>
+            <input class="ui-input" id="client-email" type="email"
+                   placeholder="billing@client.com" oninput="update()">
+          </div>
+          <div class="ui-field">
+            <label class="ui-label" for="client-phone">Phone</label>
+            <input class="ui-input" id="client-phone" type="tel"
+                   placeholder="(212) 555-0100" oninput="update()">
+          </div>
+        </div>
+      </div>
+
+      <!-- Invoice details -->
+      <div class="form-section">
+        <div class="form-section-title">Invoice details</div>
+        <div class="form-row-3">
+          <div class="ui-field">
+            <label class="ui-label" for="inv-number">Invoice #</label>
+            <input class="ui-input" id="inv-number" type="text"
+                   placeholder="INV-001" oninput="update()">
+          </div>
+          <div class="ui-field">
+            <label class="ui-label" for="inv-date">Issue date</label>
+            <input class="ui-input" id="inv-date" type="date" oninput="update()">
+          </div>
+          <div class="ui-field">
+            <label class="ui-label" for="inv-due">Due date</label>
+            <input class="ui-input" id="inv-due" type="date" oninput="update()">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="ui-field">
+            <label class="ui-label" for="inv-terms">Payment terms</label>
+            <div class="ui-select-wrap">
+              <select class="ui-select" id="inv-terms" onchange="update()">
+                <option value="Net 30">Net 30</option>
+                <option value="Net 15">Net 15</option>
+                <option value="Net 60">Net 60</option>
+                <option value="Due on receipt">Due on receipt</option>
+                <option value="Custom">Custom</option>
+              </select>
+              <svg class="ui-select-arrow" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                <path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </div>
+          <div class="ui-field">
+            <label class="ui-label" for="inv-currency">Currency</label>
+            <div class="ui-select-wrap">
+              <select class="ui-select" id="inv-currency" onchange="update()">
+                <option value="$" data-code="USD">USD — $</option>
+                <option value="€" data-code="EUR">EUR — €</option>
+                <option value="£" data-code="GBP">GBP — £</option>
+                <option value="¥" data-code="JPY">JPY — ¥</option>
+                <option value="C$" data-code="CAD">CAD — C$</option>
+                <option value="A$" data-code="AUD">AUD — A$</option>
+              </select>
+              <svg class="ui-select-arrow" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                <path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Line items -->
+      <div class="form-section">
+        <div class="form-section-title">Line items</div>
+
+        <table class="line-items-table" aria-label="Invoice line items">
+          <thead>
+            <tr>
+              <th scope="col">Description</th>
+              <th scope="col">Qty</th>
+              <th scope="col">Rate</th>
+              <th scope="col" style="text-align:right">Amount</th>
+              <th scope="col"><span class="forge-sr-only">Remove</span></th>
+            </tr>
+          </thead>
+          <tbody id="line-items-body">
+            <!-- populated by JS -->
+          </tbody>
+        </table>
+
+        <button class="ui-btn ui-btn-sm ui-btn-ghost" onclick="addLine()"
+                style="width:100%;margin-bottom:16px"
+                aria-label="Add line item">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+            <path d="M6 1v10M1 6h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          Add line item
+        </button>
+
+        <!-- Tax -->
+        <div class="form-row" style="align-items:flex-end">
+          <div class="ui-field">
+            <label class="ui-label" for="inv-tax">Tax rate (%)</label>
+            <input class="ui-input" id="inv-tax" type="number"
+                   min="0" max="100" step="0.1"
+                   placeholder="0" value="0" oninput="update()">
+          </div>
+          <div class="ui-field">
+            <label class="ui-label" for="inv-discount">Discount (%)</label>
+            <input class="ui-input" id="inv-discount" type="number"
+                   min="0" max="100" step="0.1"
+                   placeholder="0" value="0" oninput="update()">
+          </div>
+        </div>
+
+        <!-- Totals summary -->
+        <div class="totals-section" aria-label="Invoice totals">
+          <div class="total-row">
+            <span class="total-row-label">Subtotal</span>
+            <span class="total-row-value" id="summary-subtotal">$0.00</span>
+          </div>
+          <div class="total-row" id="discount-row" style="display:none">
+            <span class="total-row-label">Discount</span>
+            <span class="total-row-value" id="summary-discount" style="color:var(--color-text-success)">-$0.00</span>
+          </div>
+          <div class="total-row" id="tax-row" style="display:none">
+            <span class="total-row-label">Tax</span>
+            <span class="total-row-value" id="summary-tax">$0.00</span>
+          </div>
+          <div class="total-row total-row-grand">
+            <span class="total-row-label">Total due</span>
+            <span class="total-row-value" id="summary-total">$0.00</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Notes -->
+      <div class="form-section">
+        <div class="form-section-title">Notes & payment info</div>
+        <div class="form-full">
+          <div class="ui-field">
+            <label class="ui-label" for="inv-notes">Notes</label>
+            <textarea class="ui-textarea" id="inv-notes" rows="3"
+                      placeholder="Thank you for your business. Payment due within the agreed terms."
+                      oninput="update()"></textarea>
+          </div>
+        </div>
+        <div class="form-full">
+          <div class="ui-field">
+            <label class="ui-label" for="inv-payment-info">Payment details</label>
+            <textarea class="ui-textarea" id="inv-payment-info" rows="2"
+                      placeholder="Bank: First National · Account: 1234567890 · Routing: 021000021"
+                      style="min-height:60px"
+                      oninput="update()"></textarea>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ── PREVIEW PANEL ── -->
+    <div class="app-preview-panel" role="complementary" aria-label="Invoice preview">
+
+      <div class="preview-actions">
+        <button class="ui-btn ui-btn-sm ui-btn-ghost" onclick="clearForm()"
+                aria-label="Clear all form data">
+          Clear
+        </button>
+        <button class="ui-btn ui-btn-sm" onclick="window.print()"
+                aria-label="Print invoice">
+          <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+            <path d="M3 5V1h8v4M3 10H1V5h12v5h-2M3 8h8v5H3z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
+          </svg>
+          Print
+        </button>
+        <button class="ui-btn ui-btn-sm ui-btn-accent" onclick="window.print()"
+                aria-label="Save invoice as PDF">
+          <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+            <path d="M2 10v2h10v-2M7 1v7M4 5l3 3 3-3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Save PDF
+        </button>
+      </div>
+
+      <!-- Invoice preview -->
+      <div class="invoice-preview" id="invoice-preview" aria-label="Invoice document preview">
+
+        <div class="inv-header">
+          <div>
+            <div class="inv-brand-name" id="prev-biz-name">Your Business</div>
+            <div class="inv-brand-address" id="prev-biz-address"></div>
+            <div class="inv-brand-address" id="prev-biz-contact" style="margin-top:4px"></div>
+          </div>
+          <div class="inv-meta">
+            <div class="inv-title">INVOICE</div>
+            <div class="inv-number" id="prev-inv-number">INV-001</div>
+            <div class="inv-dates">
+              <div class="inv-date-row">
+                <span class="inv-date-label">Issued:</span>
+                <span class="inv-date-value" id="prev-date">—</span>
+              </div>
+              <div class="inv-date-row">
+                <span class="inv-date-label">Due:</span>
+                <span class="inv-date-value" id="prev-due">—</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <hr class="inv-divider" aria-hidden="true">
+
+        <div class="inv-parties">
+          <div>
+            <div class="inv-party-label">From</div>
+            <div class="inv-party-name" id="prev-from-name">Your Business</div>
+            <div class="inv-party-address" id="prev-from-address"></div>
+          </div>
+          <div>
+            <div class="inv-party-label">Bill to</div>
+            <div class="inv-party-name" id="prev-to-name">Client Name</div>
+            <div class="inv-party-address" id="prev-to-address"></div>
+          </div>
+        </div>
+
+        <table class="inv-items-table" aria-label="Invoice items">
+          <thead>
+            <tr>
+              <th scope="col">Description</th>
+              <th scope="col">Qty</th>
+              <th scope="col">Rate</th>
+              <th scope="col">Amount</th>
+            </tr>
+          </thead>
+          <tbody id="prev-line-items">
+            <tr>
+              <td colspan="4" style="color:#b8b5b0;font-size:13px;padding:20px 0;text-align:center">
+                Add line items to your invoice
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="inv-totals">
+          <div class="inv-totals-inner">
+            <div class="inv-total-row">
+              <span>Subtotal</span>
+              <span class="inv-total-row-value" id="prev-subtotal">$0.00</span>
+            </div>
+            <div class="inv-total-row" id="prev-discount-row" style="display:none">
+              <span>Discount</span>
+              <span class="inv-total-row-value" id="prev-discount" style="color:#3b6d11">-$0.00</span>
+            </div>
+            <div class="inv-total-row" id="prev-tax-row" style="display:none">
+              <span id="prev-tax-label">Tax</span>
+              <span class="inv-total-row-value" id="prev-tax">$0.00</span>
+            </div>
+            <div class="inv-total-row inv-total-grand">
+              <span>Total due</span>
+              <span class="inv-total-row-value" id="prev-total">$0.00</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="inv-footer">
+          <div id="prev-notes-block" style="display:none">
+            <div class="inv-notes-label">Notes</div>
+            <div class="inv-notes-text" id="prev-notes"></div>
+          </div>
+          <div id="prev-payment-block" style="display:none" style="margin-top:12px">
+            <div class="inv-payment" id="prev-payment">
+              <div class="inv-payment-label">Payment details</div>
+              <div id="prev-payment-text"></div>
+            </div>
+          </div>
+          <div style="margin-top:20px;font-size:11px;color:#b8b5b0;text-align:center">
+            Generated with <a href="https://jlogan839-forge.github.io/forge-ui" style="color:#c8410a;text-decoration:none">Forge UI</a> · Free invoice generator for small businesses
+          </div>
+        </div>
+
+      </div>
+
+      <div class="built-with">
+        Built with <a href="index.html">Forge UI Kit</a> — free, open source, MIT licensed
+      </div>
+
+    </div>
+  </div>
+
+  <script src="forge-ui-kit.js"></script>
+  <script>
+    // ── STATE ──
+    let lines = [
+      { desc: '', qty: 1, rate: 0 },
+      { desc: '', qty: 1, rate: 0 }
+    ];
+
+    // ── INIT ──
+    document.addEventListener('DOMContentLoaded', () => {
+      const today = new Date();
+      const due = new Date();
+      due.setDate(today.getDate() + 30);
+      document.getElementById('inv-date').value = fmt(today);
+      document.getElementById('inv-due').value = fmt(due);
+      renderLines();
+      update();
+    });
+
+    function fmt(d) {
+      return d.toISOString().split('T')[0];
+    }
+
+    function fmtDisplay(str) {
+      if (!str) return '—';
+      const d = new Date(str + 'T00:00:00');
+      return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+    }
+
+    // ── CURRENCY ──
+    function currency() {
+      const sel = document.getElementById('inv-currency');
+      return sel.options[sel.selectedIndex].value;
+    }
+
+    function fmt$(n) {
+      return currency() + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+
+    // ── LINE ITEMS ──
+    function addLine() {
+      lines.push({ desc: '', qty: 1, rate: 0 });
+      renderLines();
+      update();
+      const rows = document.querySelectorAll('.line-item-row');
+      const last = rows[rows.length - 1];
+      if (last) last.querySelector('input').focus();
+    }
+
+    function removeLine(i) {
+      if (lines.length <= 1) return;
+      lines.splice(i, 1);
+      renderLines();
+      update();
+    }
+
+    function renderLines() {
+      const tbody = document.getElementById('line-items-body');
+      tbody.innerHTML = '';
+      lines.forEach((line, i) => {
+        const amount = (parseFloat(line.qty) || 0) * (parseFloat(line.rate) || 0);
+        const tr = document.createElement('tr');
+        tr.className = 'line-item-row';
+        tr.innerHTML = `
+          <td>
+            <input class="ui-input" type="text" placeholder="Description"
+                   value="${esc(line.desc)}" style="font-size:13px;height:32px"
+                   oninput="lines[${i}].desc=this.value;updatePreview()"
+                   onchange="update()"
+                   aria-label="Line item ${i+1} description">
+          </td>
+          <td>
+            <input class="ui-input" type="number" min="0" step="1"
+                   value="${line.qty}" style="font-size:13px;height:32px;text-align:right"
+                   oninput="lines[${i}].qty=this.value;updatePreview()"
+                   onchange="update()"
+                   aria-label="Line item ${i+1} quantity">
+          </td>
+          <td>
+            <input class="ui-input" type="number" min="0" step="0.01"
+                   value="${line.rate || ''}" placeholder="0.00"
+                   style="font-size:13px;height:32px;text-align:right"
+                   oninput="lines[${i}].rate=this.value;updatePreview()"
+                   onchange="update()"
+                   aria-label="Line item ${i+1} rate">
+          </td>
+          <td class="line-item-total">${fmt$(amount)}</td>
+          <td>
+            <button class="remove-line-btn" onclick="removeLine(${i})"
+                    aria-label="Remove line item ${i+1}" ${lines.length<=1?'disabled':''}>✕</button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function esc(str) {
+      return (str || '').replace(/"/g, '&quot;').replace(/</g, '&lt;');
+    }
+
+    // ── CALCULATE ──
+    function calcTotals() {
+      const subtotal = lines.reduce((sum, l) => {
+        return sum + (parseFloat(l.qty)||0) * (parseFloat(l.rate)||0);
+      }, 0);
+      const discPct = parseFloat(document.getElementById('inv-discount').value) || 0;
+      const taxPct  = parseFloat(document.getElementById('inv-tax').value) || 0;
+      const discount = subtotal * (discPct / 100);
+      const afterDiscount = subtotal - discount;
+      const tax = afterDiscount * (taxPct / 100);
+      const total = afterDiscount + tax;
+      return { subtotal, discount, discPct, tax, taxPct, total };
+    }
+
+    // ── UPDATE ──
+    function update() {
+      renderLines();
+      updatePreview();
+    }
+
+    function updatePreview() {
+      const t = calcTotals();
+      const sym = currency();
+
+      // Form panel totals
+      document.getElementById('summary-subtotal').textContent = fmt$(t.subtotal);
+      document.getElementById('summary-discount').textContent = '-' + fmt$(t.discount);
+      document.getElementById('summary-tax').textContent = fmt$(t.tax);
+      document.getElementById('summary-total').textContent = fmt$(t.total);
+      document.getElementById('discount-row').style.display = t.discPct > 0 ? 'flex' : 'none';
+      document.getElementById('tax-row').style.display = t.taxPct > 0 ? 'flex' : 'none';
+
+      // Business info
+      const bizName = v('biz-name') || 'Your Business';
+      const bizAddr = v('biz-address');
+      const bizEmail = v('biz-email');
+      const bizPhone = v('biz-phone');
+      set('prev-biz-name', bizName);
+      set('prev-biz-address', bizAddr.replace(/\n/g,'<br>'));
+      set('prev-biz-contact', [bizEmail, bizPhone].filter(Boolean).join(' · '));
+      set('prev-from-name', bizName);
+      set('prev-from-address', [bizAddr, bizEmail, bizPhone].filter(Boolean).join('<br>').replace(/\n/g,'<br>'));
+
+      // Client info
+      const clientName = v('client-name') || 'Client Name';
+      const clientAddr = v('client-address');
+      const clientEmail = v('client-email');
+      const clientPhone = v('client-phone');
+      set('prev-to-name', clientName);
+      set('prev-to-address', [clientAddr, clientEmail, clientPhone].filter(Boolean).join('<br>').replace(/\n/g,'<br>'));
+
+      // Invoice meta
+      set('prev-inv-number', v('inv-number') || 'INV-001');
+      set('prev-date', fmtDisplay(v('inv-date')));
+      set('prev-due', fmtDisplay(v('inv-due')));
+
+      // Line items preview
+      const tbody = document.getElementById('prev-line-items');
+      const activeLines = lines.filter(l => l.desc || l.rate > 0);
+      if (activeLines.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="4" style="color:#b8b5b0;font-size:13px;padding:20px 0;text-align:center">Add line items to your invoice</td></tr>';
+      } else {
+        tbody.innerHTML = lines.map(l => {
+          if (!l.desc && !l.rate) return '';
+          const amt = (parseFloat(l.qty)||0) * (parseFloat(l.rate)||0);
+          return `<tr>
+            <td>${esc(l.desc) || '<span style="color:#b8b5b0">—</span>'}</td>
+            <td style="text-align:right">${parseFloat(l.qty)||0}</td>
+            <td style="text-align:right">${fmt$(parseFloat(l.rate)||0)}</td>
+            <td style="text-align:right;font-family:var(--forge-font-mono);font-weight:500;color:#1a1917">${fmt$(amt)}</td>
+          </tr>`;
+        }).join('');
+      }
+
+      // Preview totals
+      set('prev-subtotal', fmt$(t.subtotal));
+      set('prev-discount', '-' + fmt$(t.discount));
+      set('prev-tax', fmt$(t.tax));
+      set('prev-total', fmt$(t.total));
+      document.getElementById('prev-discount-row').style.display = t.discPct > 0 ? 'flex' : 'none';
+      document.getElementById('prev-tax-row').style.display = t.taxPct > 0 ? 'flex' : 'none';
+      document.getElementById('prev-tax-label').textContent = `Tax (${t.taxPct}%)`;
+
+      // Notes
+      const notes = v('inv-notes');
+      const notesBlock = document.getElementById('prev-notes-block');
+      notesBlock.style.display = notes ? 'block' : 'none';
+      set('prev-notes', notes.replace(/\n/g,'<br>'));
+
+      // Payment info
+      const payInfo = v('inv-payment-info');
+      const payBlock = document.getElementById('prev-payment-block');
+      payBlock.style.display = payInfo ? 'block' : 'none';
+      set('prev-payment-text', payInfo.replace(/\n/g,'<br>'));
+    }
+
+    function v(id) {
+      return (document.getElementById(id)||{}).value || '';
+    }
+
+    function set(id, html) {
+      const el = document.getElementById(id);
+      if (el) el.innerHTML = html;
+    }
+
+    // ── CLEAR ──
+    function clearForm() {
+      if (!confirm('Clear all invoice data?')) return;
+      ['biz-name','biz-address','biz-email','biz-phone',
+       'client-name','client-address','client-email','client-phone',
+       'inv-number','inv-notes','inv-payment-info'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.value = '';
+      });
+      document.getElementById('inv-tax').value = '0';
+      document.getElementById('inv-discount').value = '0';
+      lines = [{ desc: '', qty: 1, rate: 0 }, { desc: '', qty: 1, rate: 0 }];
+      const today = new Date();
+      const due = new Date();
+      due.setDate(today.getDate() + 30);
+      document.getElementById('inv-date').value = fmt(today);
+      document.getElementById('inv-due').value = fmt(due);
+      update();
+    }
+  </script>
+</body>
+</html>
